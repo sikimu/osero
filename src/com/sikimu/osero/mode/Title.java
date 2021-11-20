@@ -19,6 +19,6 @@ public class Title extends Mode {
 	public Mode update() {
 		Scanner scanner = new Scanner(System.in);
 		int i = scanner.nextInt();
-		return this;
+		return new Game();
 	}
 }
