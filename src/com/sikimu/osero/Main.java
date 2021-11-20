@@ -1,7 +1,5 @@
 package com.sikimu.osero;
 
-import java.util.Scanner;
-
 /**
  * ÀsƒNƒ‰ƒX
  * @author sikimu
@@ -15,9 +13,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		int i = scanner.nextInt();
-		System.out.println(i);
+		ModeController.run();
 	}
 
 }
