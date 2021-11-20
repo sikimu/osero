@@ -1,5 +1,7 @@
 package com.sikimu.osero;
 
+import java.util.Scanner;
+
 import com.sikimu.osero.mode.Mode;
 import com.sikimu.osero.mode.Title;
 
@@ -21,5 +23,17 @@ public class Controller {
 			mode = mode.update();
 		}
 		while(mode != null);
+	}
+	
+	/**
+	 * ”š“ü—Í
+	 * @return@“ü—Í‚³‚ê‚½Œ‹‰Ê
+	 */
+	public static int inputInt() {
+		
+		Scanner scanner = new Scanner(System.in);
+		int num = scanner.nextInt();
+		scanner.close();
+		return num;
 	}
 }

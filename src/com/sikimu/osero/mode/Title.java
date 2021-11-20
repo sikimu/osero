@@ -1,6 +1,7 @@
 package com.sikimu.osero.mode;
 
-import java.util.Scanner;
+import com.sikimu.osero.Controller;
+import com.sikimu.osero.Drawer;
 
 /**
  * ƒ^ƒCƒgƒ‹
@@ -12,13 +13,12 @@ public class Title extends Mode {
 
 	@Override
 	public void draw() {
-		System.out.println("æè:1 Œãè:2");
+		Drawer.draw("æè:1 Œãè:2");
 	}
 
 	@Override
 	public Mode update() {
-		Scanner scanner = new Scanner(System.in);
-		int i = scanner.nextInt();
+		Controller.inputInt();
 		return new Game();
 	}
 }
