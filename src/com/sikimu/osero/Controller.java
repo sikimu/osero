@@ -3,7 +3,12 @@ package com.sikimu.osero;
 import com.sikimu.osero.mode.Mode;
 import com.sikimu.osero.mode.Title;
 
-public class ModeController {
+/**
+ * 全体のコントロール
+ * @author sikimu
+ *
+ */
+public class Controller {
 	
 	/**
 	 * 実行
