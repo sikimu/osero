@@ -12,10 +12,14 @@ import com.sikimu.osero.mode.Title;
  */
 public class Controller {
 	
+	private static Scanner scanner;
+	
 	/**
 	 * é¿çs
 	 */
 	public static void run() {
+		
+		scanner = new Scanner(System.in);
 		
 		Mode mode = new Title();
 		do {
@@ -23,6 +27,8 @@ public class Controller {
 			mode = mode.update();
 		}
 		while(mode != null);
+		
+		scanner.close();
 	}
 	
 	/**
@@ -31,9 +37,7 @@ public class Controller {
 	 */
 	public static int inputInt() {
 		
-		Scanner scanner = new Scanner(System.in);
 		int num = scanner.nextInt();
-		scanner.close();
 		return num;
 	}
 }
