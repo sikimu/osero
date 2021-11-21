@@ -1,5 +1,6 @@
 package com.sikimu.osero.player;
 
+import com.sikimu.osero.item.piece.color.Color;
 import com.sikimu.osero.player.thinking.Thinking;
 
 /**
@@ -10,23 +11,37 @@ import com.sikimu.osero.player.thinking.Thinking;
  */
 public class Player {
 
+	/** 色 */
+	private Color color;
+	
 	/** 使用している思考 */
 	private Thinking thinking;
 	
 	/**
 	 * コンストラクタ
+	 * @param color 使用する色
 	 * @param thinking　使用する思考
 	 */
-	public Player(Thinking thinking) {
+	public Player(Color color, Thinking thinking) {
+		this.color = color;
 		this.thinking = thinking;
 	}
 	
 	
 	/**
 	 * 思考結果を返す
-	 * @return
+	 * @return 配置する番号
 	 */
 	public int think() {
 		return thinking.think();
+	}
+
+
+	/**
+	 * プレイヤーの色の取得
+	 * @return プレイヤーの色
+	 */
+	public Color getColor() {
+		return color;
 	}
 }
