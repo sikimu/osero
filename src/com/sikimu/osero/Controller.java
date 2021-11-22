@@ -33,11 +33,12 @@ public class Controller {
 	
 	/**
 	 * 数字入力
+	 * nextIntでとってしまうと例外から復帰が大変なのでこの形式
 	 * @return　入力された結果
 	 */
-	public static int inputInt() {
-		
-		int num = scanner.nextInt();
-		return num;
+	public static int inputInt() throws Exception{
+
+		String num = scanner.next();
+		return Integer.parseInt(num);
 	}
 }

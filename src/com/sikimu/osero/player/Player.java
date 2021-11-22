@@ -2,6 +2,8 @@ package com.sikimu.osero.player;
 
 import com.sikimu.osero.abst.Color;
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.item.Board;
+import com.sikimu.osero.item.BoardPos;
 
 /**
  * オセロをやる人
@@ -30,10 +32,11 @@ public class Player {
 	
 	/**
 	 * 思考結果を返す
+	 * @param board 現在のボード
 	 * @return 配置する番号
 	 */
-	public int think() {
-		return thinking.think();
+	public BoardPos think(Board board) {
+		return thinking.think(board);
 	}
 
 

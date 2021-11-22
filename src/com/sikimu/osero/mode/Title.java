@@ -19,7 +19,11 @@ public class Title extends Mode {
 
 	@Override
 	public Mode update() {
-		Controller.inputInt();
+		try {
+			Controller.inputInt();
+		} catch (Exception e) {
+			return update();
+		}
 		return new Game();
 	}
 }

@@ -24,22 +24,37 @@ public class Board {
 	 */
 	public Board(ArrayList<Player> playerList) {
 		//駒の初期配置
-		setPiece(playerList.get(0), 3, 3);
-		setPiece(playerList.get(0), 4, 4);
-		setPiece(playerList.get(1), 3, 4);
-		setPiece(playerList.get(1), 4, 3);
+		setPiece(playerList.get(0), new BoardPos(3,3));
+		setPiece(playerList.get(0), new BoardPos(4,4));
+		setPiece(playerList.get(1), new BoardPos(3,4));
+		setPiece(playerList.get(1), new BoardPos(4,3));
 	}
+	
+	/**
+	 * ボードの横幅
+	 * @return
+	 */
+	public int getWidth() {
+		return pieceList[0].length;
+	}
+
+	/**
+	 * ボードの横幅
+	 * @return
+	 */
+	public int getHeight() {
+		return pieceList.length;
+	}	
 	
 	/**
 	 * 駒の配置
 	 * @param player 配置するプレイヤー
-	 * @param x 配置x座標
-	 * @param y 配置y座標
+	 * @param pos 配置座標
 	 */
-	private void setPiece(Player player, int x, int y) {
+	public void setPiece(Player player, BoardPos pos) {
 		
 		Piece piece = new Piece(player.getColor());
-		pieceList[y][x] = piece;
+		pieceList[pos.y][pos.x] = piece;
 	}
 	
 	/**

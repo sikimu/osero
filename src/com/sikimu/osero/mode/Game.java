@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.item.Board;
+import com.sikimu.osero.item.BoardPos;
 import com.sikimu.osero.item.piece.color.Black;
 import com.sikimu.osero.item.piece.color.White;
 import com.sikimu.osero.player.Player;
@@ -36,7 +37,8 @@ public class Game extends Mode {
 
 	@Override
 	public Mode update() {
-		playerList.get(0).think();
+		BoardPos pos = playerList.get(0).think(board);
+		board.setPiece(playerList.get(0), pos);
 		return this;
 	}
 
