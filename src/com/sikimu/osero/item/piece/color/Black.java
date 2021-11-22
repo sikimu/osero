@@ -9,7 +9,7 @@ public class Black extends Color {
 
 	@Override
 	public String toString() {
-		return "BB";
+		return "B";
 	}
 
 }

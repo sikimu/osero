@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.sikimu.osero.Drawer;
 import com.sikimu.osero.item.piece.Piece;
-import com.sikimu.osero.item.piece.color.White;
 import com.sikimu.osero.player.Player;
 
 /**
@@ -47,11 +46,12 @@ public class Board {
 	 * •`‰æ
 	 */
 	public void draw() {
-		for(Piece[] list: pieceList) {
-			String str = "";
-			for(Piece piece : list) {
+		Drawer.draw(" 12345678");//c‚Ì—ñ‚Ì”Ô†
+		for(int i = 0;i < pieceList.length;i++) {
+			String str = "" + (i + 1);//‰¡‚Ì—ñ‚Ì”Ô†
+			for(Piece piece : pieceList[i]) {
 				if(piece == null) {
-					str = str + "00";
+					str = str + "+";
 				}
 				else {
 					str = str + piece.toString();

@@ -9,7 +9,7 @@ public class White extends Color {
 
 	@Override
 	public String toString() {
-		return "WW";
+		return "W";
 	}
 
 }
