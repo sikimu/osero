@@ -2,6 +2,7 @@ package com.sikimu.osero.mode;
 
 import java.util.ArrayList;
 
+import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.piece.color.Black;
 import com.sikimu.osero.item.piece.color.White;

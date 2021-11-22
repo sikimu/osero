@@ -1,7 +1,7 @@
 package com.sikimu.osero.player;
 
-import com.sikimu.osero.item.piece.color.Color;
-import com.sikimu.osero.player.thinking.Thinking;
+import com.sikimu.osero.abst.Color;
+import com.sikimu.osero.abst.Thinking;
 
 /**
  * ƒIƒZƒ‚ğ‚â‚él

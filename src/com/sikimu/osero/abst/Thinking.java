@@ -1,4 +1,4 @@
-package com.sikimu.osero.player.thinking;
+package com.sikimu.osero.abst;
 
 /**
  * 思考の基底クラス

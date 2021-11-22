@@ -2,7 +2,7 @@ package com.sikimu.osero;
 
 import java.util.Scanner;
 
-import com.sikimu.osero.mode.Mode;
+import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.mode.Title;
 
 /**

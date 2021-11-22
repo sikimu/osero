@@ -1,6 +1,6 @@
 package com.sikimu.osero.item.piece;
 
-import com.sikimu.osero.item.piece.color.Color;
+import com.sikimu.osero.abst.Color;
 
 /**
  * ƒIƒZƒ‚Ì‹î

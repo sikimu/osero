@@ -1,5 +1,7 @@
 package com.sikimu.osero.item.piece.color;
 
+import com.sikimu.osero.abst.Color;
+
 /**
  * •‚¢‹î
  * @author sikimu

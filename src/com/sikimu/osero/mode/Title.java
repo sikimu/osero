@@ -2,6 +2,7 @@ package com.sikimu.osero.mode;
 
 import com.sikimu.osero.Controller;
 import com.sikimu.osero.Drawer;
+import com.sikimu.osero.abst.Mode;
 
 /**
  * ƒ^ƒCƒgƒ‹

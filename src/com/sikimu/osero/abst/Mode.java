@@ -1,4 +1,4 @@
-package com.sikimu.osero.mode;
+package com.sikimu.osero.abst;
 
 /**
  * 状態ごとの制御クラスの抽象クラス

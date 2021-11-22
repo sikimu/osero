@@ -1,4 +1,4 @@
-package com.sikimu.osero.item.piece.color;
+package com.sikimu.osero.abst;
 
 /**
  * ‹î‚ÌF‚ÌŠî’êƒNƒ‰ƒX
