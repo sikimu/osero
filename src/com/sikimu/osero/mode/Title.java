@@ -19,11 +19,22 @@ public class Title extends Mode {
 
 	@Override
 	public Mode update() {
-		try {
-			Controller.inputInt();
-		} catch (Exception e) {
-			return update();
-		}
+		int no = -1;
+		do {
+			no  = input();
+		}while(no == -1);
 		return new Game();
+	}
+	
+	/**
+	 * “ü—ÍŽó•t
+	 * @return
+	 */
+	private int input() {
+		try {
+			return Controller.inputInt();
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 }

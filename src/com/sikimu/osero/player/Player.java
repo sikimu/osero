@@ -36,7 +36,7 @@ public class Player {
 	 * @return ”z’u‚·‚é”Ô†
 	 */
 	public BoardPos think(Board board) {
-		return thinking.think(board);
+		return thinking.think(this, board);
 	}
 
 

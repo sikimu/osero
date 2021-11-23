@@ -21,12 +21,13 @@ public class Game extends Mode {
 	public Game() {
 		playerList = new ArrayList<Player>();
 		
+		//プレイヤーの作成
 		Player first = new Player(new Black(), new Playing());
-		Player second = new Player(new White(), new Playing());
-		
+		Player second = new Player(new White(), new Playing());		
 		playerList.add(first);
 		playerList.add(second);
 		
+		//ボードにプレイヤーをsetする
 		board = new Board(playerList);
 	}
 	

@@ -5,6 +5,7 @@ import com.sikimu.osero.Drawer;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.BoardPos;
+import com.sikimu.osero.player.Player;
 
 /**
  * ユーザー操作で行う
@@ -14,35 +15,38 @@ import com.sikimu.osero.item.BoardPos;
 public class Playing extends Thinking {
 
 	@Override
-	public BoardPos think(Board board) {
+	public BoardPos think(Player player, Board board) {
 		
-		return input(board);
+		BoardPos pos = null;
+		
+		do {
+			pos = input(player, board);
+		}while(pos == null);
+		
+		return pos;
 	}
 
 	/**
 	 * 入力し直し対応入力処理
 	 * @return 配置箇所
 	 */
-	private BoardPos input(Board board) {
+	private BoardPos input(Player player, Board board) {
 		
 		try {
 			int no = Controller.inputInt();
 			
-			//10の位が横
-			int x = no / 10 - 1;
-			int y = no % 10 - 1;
+			//10の位が横,1の位が縦
+			BoardPos pos = new BoardPos(no / 10 - 1, no % 10 - 1);
 			
-			if(x <  0 || board.getWidth() <= x) {
-				throw new Exception();
+			if(board.isSetPiece(player, pos) == false) {
+				Drawer.draw("そこには置けません");
+				return null;
 			}
-			if(y <  0 || board.getHeight() <= y) {
-				throw new Exception();
-			}
-			
-			return new BoardPos(x, y);
+
+			return pos;
 		} catch (Exception e) {
 			Drawer.draw("入力が不正です。横縦の順で数値を入力してください。例：右上の角は91");
-			return input(board);
+			return null;
 		}
 	}
 }

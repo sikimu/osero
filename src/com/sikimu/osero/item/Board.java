@@ -31,6 +31,20 @@ public class Board {
 	}
 	
 	/**
+	 * ボードにセットできるか
+	 * @return
+	 */
+	public boolean isSetPiece(Player player, BoardPos pos) {
+		if(pos.x <  0 || getWidth() <= pos.x) {
+			return false;
+		}
+		if(pos.y <  0 || getHeight() <= pos.y) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * ボードの横幅
 	 * @return
 	 */
@@ -44,7 +58,7 @@ public class Board {
 	 */
 	public int getHeight() {
 		return pieceList.length;
-	}	
+	}		
 	
 	/**
 	 * 駒の配置
