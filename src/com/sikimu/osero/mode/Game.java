@@ -1,6 +1,7 @@
 package com.sikimu.osero.mode;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.item.Board;
@@ -12,6 +13,9 @@ import com.sikimu.osero.player.thinking.Playing;
 
 public class Game extends Mode {
 
+	/** 手番 **/
+	private int move;
+	
 	/** ゲームで使用するボード */
 	private Board board;
 	
@@ -29,6 +33,8 @@ public class Game extends Mode {
 		
 		//ボードにプレイヤーをsetする
 		board = new Board(playerList);
+		
+		move = 0;
 	}
 	
 	@Override
@@ -38,8 +44,14 @@ public class Game extends Mode {
 
 	@Override
 	public Mode update() {
-		BoardPos pos = playerList.get(0).think(board);
-		board.setPiece(playerList.get(0), pos);
+		BoardPos pos = playerList.get(move).think(board);
+		board.setPiece(playerList.get(move), pos);
+		
+		//次のプレイヤーへ切り替え
+		if(++move >= playerList.size()) {
+			move = 0;
+		}
+		
 		return this;
 	}
 
