@@ -10,17 +10,17 @@ import com.sikimu.osero.abst.Color;
 public class Piece {
 	
 	/** 表面の色 */
-	public Color surfaceColor;
+	public Color color;
 	
 	/**
 	 * コンストラクタ
 	 * @param color　表面の色
 	 */
 	public Piece(Color color) {
-		surfaceColor = color;
+		this.color = color;
 	}
 	
 	public String toString() {
-		return surfaceColor.toString();
+		return color.toString();
 	}
 }

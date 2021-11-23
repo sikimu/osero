@@ -36,7 +36,7 @@ public class Playing extends Thinking {
 			int no = Controller.inputInt();
 			
 			//10ВћИ В™Й°,1ВћИ В™Пc
-			BoardPos pos = new BoardPos(no / 10 - 1, no % 10 - 1);
+			BoardPos pos = new BoardPos((no / 10) - 1, (no % 10) - 1);
 			
 			if(board.isSetPiece(player, pos) == false) {
 				Drawer.draw("ВїВ±В…ВЌТuВѓВ№ВєВс");

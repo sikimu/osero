@@ -1,6 +1,7 @@
 package com.sikimu.osero.item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.sikimu.osero.Drawer;
 import com.sikimu.osero.item.piece.Piece;
@@ -35,10 +36,20 @@ public class Board {
 	 * @return
 	 */
 	public boolean isSetPiece(Player player, BoardPos pos) {
-		if(pos.x <  0 || getWidth() <= pos.x) {
+		return inBoard(pos.x, pos.y);
+	}
+	
+	/**
+	 * 指定座標がボード上の座標か？
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean inBoard(int x, int y) {
+		if(x <  0 || getWidth() <= x) {
 			return false;
 		}
-		if(pos.y <  0 || getHeight() <= pos.y) {
+		if(y <  0 || getHeight() <= y) {
 			return false;
 		}
 		return true;
@@ -65,10 +76,27 @@ public class Board {
 	 * @param player 配置するプレイヤー
 	 * @param pos 配置座標
 	 */
-	public void setPiece(Player player, BoardPos pos) {
-		
+	public void setPiece(Player player, BoardPos pos) {		
 		Piece piece = new Piece(player.getColor());
 		pieceList[pos.y][pos.x] = piece;
+				
+		BoardPos p = search(player, pos.x, pos.y , 1, 0);
+	}
+	
+	private BoardPos search(Player player, int x, int y, int moveX, int moveY) {				
+		x = x + moveX;
+		y = y + moveY;
+		if(inBoard(x, y) == false || pieceList[y][x] == null) {
+			return null;
+		}
+		if(pieceList[y][x].color == player.getColor()) {
+			return new BoardPos(x, y);
+		}
+		return search(player, x, y, moveX, moveY);
+	}
+	
+	public void reverse(List<Piece> list, Player player, int moveX, int moveY) {
+		
 	}
 	
 	/**
