@@ -15,6 +15,19 @@ import com.sikimu.osero.player.Player;
 public class Board {
 	
 	/**
+	 * 各方向の移動量
+	 */
+	private final static int DIRECTION[][] = {
+		{0, -1},				
+		{0,  1},	
+		{1, -1},				
+		{1,  0},	
+		{1,  1},	
+		{1, -1},				
+		{1,  1},
+	};
+	
+	/**
 	 * 配置情報[y][x]
 	 */
 	private Piece pieceList[][] = new Piece[8][8];
@@ -80,10 +93,22 @@ public class Board {
 		Piece piece = new Piece(player.getColor());
 		pieceList[pos.y][pos.x] = piece;
 				
-		int cnt = isReverse(player, pos, 1, 0);
-		if(cnt > 0) {
-			reverse(player, pos, 1, 0);
+		reverse(player, pos);
+	}
+	
+	/**
+	 * 全方向をチェック
+	 * @param player //対象のプレイヤー
+	 * @param pos 対象の位置
+	 * @return
+	 */
+	public int isReverse(Player player, BoardPos pos) {
+		int cnt = 0;
+		
+		for(int[] direction : DIRECTION) {
+			cnt += isReverse(player, pos, direction[0], direction[１]);
 		}
+		return cnt;
 	}
 	
 	/**
@@ -112,6 +137,21 @@ public class Board {
 		return 0;
 	}
 
+	/**
+	 * 全方向をめくる
+	 * @param player 対象のプレイヤー
+	 * @param pos　対象の位置
+	 */
+	public void reverse(Player player, BoardPos pos) {
+
+		for(int[] direction : DIRECTION) {
+			int cnt = isReverse(player, pos, direction[0], direction[１]);
+			if(cnt > 0) {
+				reverse(player, pos, direction[0], direction[1]);
+			}
+		}
+	}	
+	
 	/**
 	 * めくる
 	 * @param player　対象のプレイヤー
