@@ -80,23 +80,56 @@ public class Board {
 		Piece piece = new Piece(player.getColor());
 		pieceList[pos.y][pos.x] = piece;
 				
-		BoardPos p = search(player, pos.x, pos.y , 1, 0);
+		int cnt = isReverse(player, pos, 1, 0);
+		if(cnt > 0) {
+			reverse(player, pos, 1, 0);
+		}
 	}
 	
-	private BoardPos search(Player player, int x, int y, int moveX, int moveY) {				
-		x = x + moveX;
-		y = y + moveY;
-		if(inBoard(x, y) == false || pieceList[y][x] == null) {
-			return null;
-		}
-		if(pieceList[y][x].color == player.getColor()) {
-			return new BoardPos(x, y);
-		}
-		return search(player, x, y, moveX, moveY);
+	/**
+	 * めくれるか判定
+	 * @param player　対象のプレイヤー
+	 * @param pos 対象の位置
+	 * @param moveX めくっていく方向x
+	 * @param moveY めくっていく方向y
+	 * @return めくれる枚数
+	 */
+	public int isReverse(Player player, BoardPos pos, int moveX, int moveY) {
+		int cnt = 0;
+		int x = pos.x + moveX;
+		int y = pos.y + moveY;
+		while(inBoard(x, y)) {
+			if(pieceList[y][x] == null) {
+				return 0;
+			}
+			if(pieceList[y][x].color == player.getColor()) {
+				return cnt;
+			}
+			cnt++;
+			x = x + moveX;
+			y = y + moveY;
+		}		
+		return 0;
 	}
-	
-	public void reverse(List<Piece> list, Player player, int moveX, int moveY) {
-		
+
+	/**
+	 * めくる
+	 * @param player　対象のプレイヤー
+	 * @param pos 対象の位置
+	 * @param moveX めくっていく方向x
+	 * @param moveY めくっていく方向y
+	 */
+	private void reverse(Player player, BoardPos pos, int moveX, int moveY) {	
+		int x = pos.x + moveX;
+		int y = pos.y + moveY;
+		while(inBoard(x, y)) {
+			if(pieceList[y][x].color == player.getColor()) {
+				return;
+			}
+			pieceList[y][x].color = player.getColor();
+			x = x + moveX;
+			y = y + moveY;
+		}				
 	}
 	
 	/**
