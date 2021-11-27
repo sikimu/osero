@@ -97,29 +97,29 @@ public class Board {
 	}
 	
 	/**
-	 * 全方向をチェック
+	 *　めくれる枚数(全方向)
 	 * @param player //対象のプレイヤー
 	 * @param pos 対象の位置
 	 * @return
 	 */
-	public int isReverse(Player player, BoardPos pos) {
+	public int countReverse(Player player, BoardPos pos) {
 		int cnt = 0;
 		
 		for(int[] direction : DIRECTION) {
-			cnt += isReverse(player, pos, direction[0], direction[１]);
+			cnt += countReverse(player, pos, direction[0], direction[１]);
 		}
 		return cnt;
 	}
 	
 	/**
-	 * めくれるか判定
+	 * めくれる枚数
 	 * @param player　対象のプレイヤー
 	 * @param pos 対象の位置
 	 * @param moveX めくっていく方向x
 	 * @param moveY めくっていく方向y
 	 * @return めくれる枚数
 	 */
-	public int isReverse(Player player, BoardPos pos, int moveX, int moveY) {
+	public int countReverse(Player player, BoardPos pos, int moveX, int moveY) {
 		int cnt = 0;
 		int x = pos.x + moveX;
 		int y = pos.y + moveY;
@@ -145,7 +145,7 @@ public class Board {
 	public void reverse(Player player, BoardPos pos) {
 
 		for(int[] direction : DIRECTION) {
-			int cnt = isReverse(player, pos, direction[0], direction[１]);
+			int cnt = countReverse(player, pos, direction[0], direction[１]);
 			if(cnt > 0) {
 				reverse(player, pos, direction[0], direction[1]);
 			}

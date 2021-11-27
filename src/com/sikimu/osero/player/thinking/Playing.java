@@ -39,7 +39,11 @@ public class Playing extends Thinking {
 			BoardPos pos = new BoardPos((no / 10) - 1, (no % 10) - 1);
 			
 			if(board.isSetPiece(player, pos) == false) {
-				Drawer.draw("‚»‚±‚É‚Í’u‚¯‚Ü‚¹‚ñ");
+				Drawer.draw("”ÍˆÍŠO‚Å‚·");
+				return null;
+			}
+			if(board.countReverse(player, pos) == 0) {
+				Drawer.draw("‚ß‚­‚ê‚Ü‚¹‚ñ");
 				return null;
 			}
 
