@@ -5,7 +5,7 @@ import com.sikimu.osero.Drawer;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.BoardPos;
-import com.sikimu.osero.player.Player;
+import com.sikimu.osero.item.piece.Piece.COLOR;
 
 /**
  * ユーザー操作で行う
@@ -15,12 +15,12 @@ import com.sikimu.osero.player.Player;
 public class Playing extends Thinking {
 
 	@Override
-	public BoardPos think(Player player, Board board) {
+	public BoardPos think(COLOR color, Board board) {
 		
 		BoardPos pos = null;
 		
 		do {
-			pos = input(player, board);
+			pos = input(color, board);
 		}while(pos == null);
 		
 		return pos;
@@ -30,7 +30,7 @@ public class Playing extends Thinking {
 	 * 入力し直し対応入力処理
 	 * @return 配置箇所
 	 */
-	private BoardPos input(Player player, Board board) {
+	private BoardPos input(COLOR color, Board board) {
 		
 		try {
 			int no = Controller.inputInt();
@@ -38,11 +38,11 @@ public class Playing extends Thinking {
 			//10の位が横,1の位が縦
 			BoardPos pos = new BoardPos((no / 10) - 1, (no % 10) - 1);
 			
-			if(board.isSetPiece(player, pos) == false) {
+			if(board.isSetPiece(pos) == false) {
 				Drawer.draw("おけません");
 				return null;
 			}
-			if(board.countReverse(player, pos) == 0) {
+			if(board.countReverse(color, pos) == 0) {
 				Drawer.draw("めくれません");
 				return null;
 			}

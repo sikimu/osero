@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.sikimu.osero.Drawer;
 import com.sikimu.osero.item.piece.Piece;
-import com.sikimu.osero.player.Player;
+import com.sikimu.osero.item.piece.Piece.COLOR;
 
 /**
  * オセロのボード
@@ -35,21 +35,20 @@ public class Board {
 	
 	/**
 	 * コンストラクタ
-	 * @param playerList
 	 */
-	public Board(Player[] players) {
+	public Board() {
 		//駒の初期配置
-		setPiece(players[0], new BoardPos(3,3));
-		setPiece(players[0], new BoardPos(4,4));
-		setPiece(players[1], new BoardPos(3,4));
-		setPiece(players[1], new BoardPos(4,3));
+		setPiece(COLOR.BLACK, new BoardPos(3,3));
+		setPiece(COLOR.BLACK, new BoardPos(4,4));
+		setPiece(COLOR.WHITE, new BoardPos(3,4));
+		setPiece(COLOR.WHITE, new BoardPos(4,3));
 	}
 	
 	/**
 	 * ボードにセットできるか
 	 * @return
 	 */
-	public boolean isSetPiece(Player player, BoardPos pos) {
+	public boolean isSetPiece(BoardPos pos) {
 		return inBoard(pos.x, pos.y) && pieceList[pos.y][pos.x] == null;
 	}
 	
@@ -87,22 +86,22 @@ public class Board {
 	
 	/**
 	 * 駒の配置
-	 * @param player 配置するプレイヤー
+	 * @param player 配置する色
 	 * @param pos 配置座標
 	 */
-	public void setPiece(Player player, BoardPos pos) {		
-		Piece piece = new Piece(player.getColor());
+	public void setPiece(COLOR color, BoardPos pos) {		
+		Piece piece = new Piece(color);
 		pieceList[pos.y][pos.x] = piece;
 				
-		reverse(player, pos);
+		reverse(color, pos);
 	}
 	
 	/**
 	 * 置ける場所の取得
-	 * @param player　対象のプレイヤー
+	 * @param player　対象の色
 	 * @return 置ける場所のリスト
 	 */
-	public List<BoardPos> getReverse(Player player){
+	public List<BoardPos> getReverse(COLOR color){
 		ArrayList<BoardPos> list = new ArrayList<BoardPos>();
 		
 		for(int y = 0;y < pieceList.length;y++) {
@@ -111,7 +110,7 @@ public class Board {
 					continue;
 				}
 				BoardPos pos = new BoardPos(x, y);
-				if(countReverse(player, pos) > 0) {
+				if(countReverse(color, pos) > 0) {
 					list.add(pos);
 				}
 			}
@@ -122,28 +121,28 @@ public class Board {
 	
 	/**
 	 *　めくれる枚数(全方向)
-	 * @param player //対象のプレイヤー
+	 * @param player 対象の色
 	 * @param pos 対象の位置
 	 * @return
 	 */
-	public int countReverse(Player player, BoardPos pos) {
+	public int countReverse(COLOR color, BoardPos pos) {
 		int cnt = 0;
 		
 		for(int[] direction : DIRECTION) {
-			cnt += countReverse(player, pos, direction[0], direction[１]);
+			cnt += countReverse(color, pos, direction[0], direction[１]);
 		}
 		return cnt;
 	}
 	
 	/**
 	 * めくれる枚数
-	 * @param player　対象のプレイヤー
+	 * @param player　対象の色
 	 * @param pos 対象の位置
 	 * @param moveX めくっていく方向x
 	 * @param moveY めくっていく方向y
 	 * @return めくれる枚数
 	 */
-	public int countReverse(Player player, BoardPos pos, int moveX, int moveY) {
+	public int countReverse(COLOR color, BoardPos pos, int moveX, int moveY) {
 		int cnt = 0;
 		int x = pos.x + moveX;
 		int y = pos.y + moveY;
@@ -151,7 +150,7 @@ public class Board {
 			if(pieceList[y][x] == null) {
 				return 0;
 			}
-			if(pieceList[y][x].color == player.getColor()) {
+			if(pieceList[y][x].color == color) {
 				return cnt;
 			}
 			cnt++;
@@ -163,34 +162,34 @@ public class Board {
 
 	/**
 	 * 全方向をめくる
-	 * @param player 対象のプレイヤー
+	 * @param color 対象の色
 	 * @param pos　対象の位置
 	 */
-	public void reverse(Player player, BoardPos pos) {
+	public void reverse(COLOR color, BoardPos pos) {
 
 		for(int[] direction : DIRECTION) {
-			int cnt = countReverse(player, pos, direction[0], direction[１]);
+			int cnt = countReverse(color, pos, direction[0], direction[１]);
 			if(cnt > 0) {
-				reverse(player, pos, direction[0], direction[1]);
+				reverse(color, pos, direction[0], direction[1]);
 			}
 		}
 	}	
 	
 	/**
 	 * めくる
-	 * @param player　対象のプレイヤー
+	 * @param player　対象の色
 	 * @param pos 対象の位置
 	 * @param moveX めくっていく方向x
 	 * @param moveY めくっていく方向y
 	 */
-	private void reverse(Player player, BoardPos pos, int moveX, int moveY) {	
+	private void reverse(COLOR color, BoardPos pos, int moveX, int moveY) {	
 		int x = pos.x + moveX;
 		int y = pos.y + moveY;
 		while(inBoard(x, y)) {
-			if(pieceList[y][x].color == player.getColor()) {
+			if(pieceList[y][x].color == color) {
 				return;
 			}
-			pieceList[y][x].color = player.getColor();
+			pieceList[y][x].color = color;
 			x = x + moveX;
 			y = y + moveY;
 		}				
@@ -208,7 +207,7 @@ public class Board {
 					str = str + "+";
 				}
 				else {
-					str = str + piece.toString();
+					str = str + piece.color.colorString;
 				}
 			}
 			Drawer.draw(str);//1行づつ

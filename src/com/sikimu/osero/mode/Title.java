@@ -3,9 +3,7 @@ package com.sikimu.osero.mode;
 import com.sikimu.osero.Controller;
 import com.sikimu.osero.Drawer;
 import com.sikimu.osero.abst.Mode;
-import com.sikimu.osero.item.piece.color.Black;
-import com.sikimu.osero.item.piece.color.White;
-import com.sikimu.osero.player.Player;
+import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.player.thinking.Computing;
 import com.sikimu.osero.player.thinking.Playing;
 
@@ -24,26 +22,30 @@ public class Title extends Mode {
 
 	@Override
 	public Mode update() {
-		Player p1 = null;
-		Player p2 = null;
+		Thinking first = null;
+		Thinking second = null;
 		int no = -1;
 		do {
 			no  = input();
 			switch(no) {
 			case 1:
-				p1 = new Player(new White(), new Playing());
-				p2 = new Player(new Black(), new Computing());
+				first = new Playing();
+				second = new Computing();
 				break;
 			case 2:
-				p1 = new Player(new White(), new Computing());
-				p2 = new Player(new Black(), new Playing());
+				first = new Playing();
+				second = new Computing();
+				break;
+			case 3:
+				first = new Computing();
+				second = new Computing();
 				break;
 			default:
 				no = -1;
 				break;
 			}
 		}while(no == -1);
-		return new Game(p1, p2);
+		return new Game(first, second);
 	}
 	
 	/**
