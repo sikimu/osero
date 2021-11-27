@@ -18,13 +18,14 @@ public class Board {
 	 * 各方向の移動量
 	 */
 	private final static int DIRECTION[][] = {
-		{0, -1},				
+		{0, -1},			
 		{0,  1},	
 		{1, -1},				
 		{1,  0},	
 		{1,  1},	
-		{1, -1},				
-		{1,  1},
+		{-1, -1},		
+		{-1,  0},
+		{-1,  1},
 	};
 	
 	/**
@@ -36,12 +37,12 @@ public class Board {
 	 * コンストラクタ
 	 * @param playerList
 	 */
-	public Board(ArrayList<Player> playerList) {
+	public Board(Player[] players) {
 		//駒の初期配置
-		setPiece(playerList.get(0), new BoardPos(3,3));
-		setPiece(playerList.get(0), new BoardPos(4,4));
-		setPiece(playerList.get(1), new BoardPos(3,4));
-		setPiece(playerList.get(1), new BoardPos(4,3));
+		setPiece(players[0], new BoardPos(3,3));
+		setPiece(players[0], new BoardPos(4,4));
+		setPiece(players[1], new BoardPos(3,4));
+		setPiece(players[1], new BoardPos(4,3));
 	}
 	
 	/**
@@ -94,6 +95,29 @@ public class Board {
 		pieceList[pos.y][pos.x] = piece;
 				
 		reverse(player, pos);
+	}
+	
+	/**
+	 * 置ける場所の取得
+	 * @param player　対象のプレイヤー
+	 * @return 置ける場所のリスト
+	 */
+	public List<BoardPos> getReverse(Player player){
+		ArrayList<BoardPos> list = new ArrayList<BoardPos>();
+		
+		for(int y = 0;y < pieceList.length;y++) {
+			for(int x = 0;x < pieceList[y].length;x++) {
+				if(pieceList[y][x] != null) {
+					continue;
+				}
+				BoardPos pos = new BoardPos(x, y);
+				if(countReverse(player, pos) > 0) {
+					list.add(pos);
+				}
+			}
+		}	
+		
+		return list;
 	}
 	
 	/**

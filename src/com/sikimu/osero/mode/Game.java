@@ -1,16 +1,15 @@
-package com.sikimu.osero.mode;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+package com.sikimu.osero.mode;
 
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.item.Board;
-import com.sikimu.osero.item.BoardPos;
-import com.sikimu.osero.item.piece.color.Black;
-import com.sikimu.osero.item.piece.color.White;
 import com.sikimu.osero.player.Player;
-import com.sikimu.osero.player.thinking.Playing;
 
+/**
+ * ゲーム中
+ * @author sikimu
+ *
+ */
 public class Game extends Mode {
 
 	/** 手番 **/
@@ -20,19 +19,13 @@ public class Game extends Mode {
 	private Board board;
 	
 	/** プレイヤーリスト(プレイする順番に入っている) */
-	private ArrayList<Player> playerList;
+	private Player[] players;
 	
-	public Game() {
-		playerList = new ArrayList<Player>();
-		
-		//プレイヤーの作成
-		Player first = new Player(new Black(), new Playing());
-		Player second = new Player(new White(), new Playing());		
-		playerList.add(first);
-		playerList.add(second);
-		
+	public Game(Player... players) {
+		this.players = players;	
+
 		//ボードにプレイヤーをsetする
-		board = new Board(playerList);
+		board = new Board(players);
 		
 		move = 0;
 	}
@@ -44,11 +37,12 @@ public class Game extends Mode {
 
 	@Override
 	public Mode update() {
-		BoardPos pos = playerList.get(move).think(board);
-		board.setPiece(playerList.get(move), pos);
+		
+		Player p = players[move];
+		board.setPiece(p, p.think(board));
 		
 		//次のプレイヤーへ切り替え
-		if(++move >= playerList.size()) {
+		if(++move >= players.length) {
 			move = 0;
 		}
 		
