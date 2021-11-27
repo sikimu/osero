@@ -49,7 +49,7 @@ public class Board {
 	 * @return
 	 */
 	public boolean isSetPiece(Player player, BoardPos pos) {
-		return inBoard(pos.x, pos.y);
+		return inBoard(pos.x, pos.y) && pieceList[pos.y][pos.x] == null;
 	}
 	
 	/**
