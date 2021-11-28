@@ -6,7 +6,7 @@ import com.sikimu.osero.item.BoardPos;
 import com.sikimu.osero.item.piece.Piece.COLOR;
 
 /**
- * ユーザー操作で行う
+ * CPU
  * @author sikimu
  *
  */
