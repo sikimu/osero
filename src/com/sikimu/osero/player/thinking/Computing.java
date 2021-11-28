@@ -12,10 +12,14 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public class Computing extends Thinking {
 
+	public Computing(COLOR color) {
+		super(color);
+	}
+
 	@Override
-	public BoardPos think(COLOR color, Board board) {
+	public BoardPos think(Board board) {
 		
-		BoardPos pos = board.getReverse(color).get(0);
+		BoardPos pos = board.getReverse(getColor()).get(0);
 		
 		return pos;
 	}

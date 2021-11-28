@@ -14,13 +14,17 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public class Playing extends Thinking {
 
+	public Playing(COLOR color) {
+		super(color);
+	}
+
 	@Override
-	public BoardPos think(COLOR color, Board board) {
+	public BoardPos think(Board board) {
 		
 		BoardPos pos = null;
 		
 		do {
-			pos = input(color, board);
+			pos = input(board);
 		}while(pos == null);
 		
 		return pos;
@@ -30,7 +34,7 @@ public class Playing extends Thinking {
 	 * “ü—Í‚µ’¼‚µ‘Î‰“ü—Íˆ—
 	 * @return ”z’u‰ÓŠ
 	 */
-	private BoardPos input(COLOR color, Board board) {
+	private BoardPos input(Board board) {
 		
 		try {
 			int no = Controller.inputInt();
@@ -42,7 +46,7 @@ public class Playing extends Thinking {
 				Drawer.draw("‚¨‚¯‚Ü‚¹‚ñ");
 				return null;
 			}
-			if(board.countReverse(color, pos) == 0) {
+			if(board.countReverse(getColor(), pos) == 0) {
 				Drawer.draw("‚ß‚­‚ê‚Ü‚¹‚ñ");
 				return null;
 			}

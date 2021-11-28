@@ -12,11 +12,22 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public abstract class Thinking {
 	
+	/** 自分の色　*/
+	private COLOR color;
+	
+	public Thinking(COLOR color) {
+		this.color = color;
+	}
+	
 	/**
 	 * 思考
 	 * @param player 思考を使用する色
 	 * @param board 現在のボード
 	 * @return 配置箇所
 	 */
-	public abstract BoardPos think(COLOR color, Board board);
+	public abstract BoardPos think(Board board);
+
+	public COLOR getColor() {
+		return color;
+	}
 }

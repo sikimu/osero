@@ -4,6 +4,7 @@ import com.sikimu.osero.Controller;
 import com.sikimu.osero.Drawer;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.item.piece.Piece.COLOR;
 import com.sikimu.osero.player.thinking.Computing;
 import com.sikimu.osero.player.thinking.Playing;
 
@@ -29,16 +30,16 @@ public class Title extends Mode {
 			no  = input();
 			switch(no) {
 			case 1:
-				first = new Playing();
-				second = new Computing();
+				first = new Playing(COLOR.BLACK);
+				second = new Computing(COLOR.WHITE);
 				break;
 			case 2:
-				first = new Playing();
-				second = new Computing();
+				first = new Computing(COLOR.BLACK);
+				second = new Playing(COLOR.WHITE);
 				break;
 			case 3:
-				first = new Computing();
-				second = new Computing();
+				first = new Computing(COLOR.BLACK);
+				second = new Computing(COLOR.WHITE);
 				break;
 			default:
 				no = -1;
