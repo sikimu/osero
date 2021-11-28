@@ -41,4 +41,12 @@ public class Controller {
 		String num = scanner.next();
 		return Integer.parseInt(num);
 	}
+	
+	/**
+	 * “ü—Í
+	 * @return “ü—Í‚³‚ê‚½Œ‹‰Ê
+	 */
+	public static String input() {
+		return scanner.next();
+	}
 }

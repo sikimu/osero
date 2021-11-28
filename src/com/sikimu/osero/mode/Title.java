@@ -18,7 +18,8 @@ public class Title extends Mode {
 
 	@Override
 	public void draw() {
-		Drawer.draw("先手:1 後手:2");
+		Drawer.draw("コンソールオセロ");
+		Drawer.draw("先手:1 後手:2 CPUのみ:3");
 	}
 
 	@Override

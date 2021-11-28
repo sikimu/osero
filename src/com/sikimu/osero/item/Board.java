@@ -213,4 +213,24 @@ public class Board {
 			Drawer.draw(str);//1s‚Ã‚Â
 		}		
 	}
+
+	/**
+	 * Œ‹‰Ê
+	 * @return@Œ‹‰Ê‚Ì•¶š—ñ
+	 */
+	public String createResult() {
+		int b = 0;
+		int w = 0;
+		for(int i = 0;i < pieceList.length;i++) {
+			for(Piece piece : pieceList[i]) {
+				if(piece.color == COLOR.BLACK) {
+					b++;
+				}
+				else {
+					w++;
+				}
+			}
+		}	
+		return "B:" + b + " W:" + w;
+	}
 }

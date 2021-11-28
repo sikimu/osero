@@ -1,14 +1,10 @@
 
 package com.sikimu.osero.mode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.BoardPos;
-import com.sikimu.osero.item.piece.Piece.COLOR;
 
 /**
  * ƒQ[ƒ€’†
@@ -61,7 +57,7 @@ public class Game extends Mode {
 
 		if(board.getReverse(next.getColor()).size() == 0) {//‘Šè‚ª‚ß‚­‚ê‚È‚¢
 			if(board.getReverse(move.getColor()).size() == 0) {// ‚Ç‚¿‚ç‚à‚ß‚­‚ê‚È‚¢‚Ì‚ÅI—¹
-				return new Title();
+				return new Result(board);
 			}	
 			return this;
 		}		
