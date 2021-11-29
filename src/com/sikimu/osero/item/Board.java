@@ -31,7 +31,10 @@ public class Board {
 	/**
 	 * 配置情報[y][x]
 	 */
-	private Piece pieceList[][] = new Piece[8][8];
+	private Piece pieceArray[][] = new Piece[8][8];
+	
+	/** 配置した駒 */
+	private List<Piece> pieceList = new ArrayList<Piece>();
 	
 	/**
 	 * コンストラクタ
@@ -49,7 +52,7 @@ public class Board {
 	 * @return
 	 */
 	public boolean isSetPiece(BoardPos pos) {
-		return inBoard(pos.x, pos.y) && pieceList[pos.y][pos.x] == null;
+		return inBoard(pos.x, pos.y) && pieceArray[pos.y][pos.x] == null;
 	}
 	
 	/**
@@ -73,7 +76,7 @@ public class Board {
 	 * @return
 	 */
 	public int getWidth() {
-		return pieceList[0].length;
+		return pieceArray[0].length;
 	}
 
 	/**
@@ -81,7 +84,7 @@ public class Board {
 	 * @return
 	 */
 	public int getHeight() {
-		return pieceList.length;
+		return pieceArray.length;
 	}		
 	
 	/**
@@ -91,7 +94,8 @@ public class Board {
 	 */
 	public void setPiece(COLOR color, BoardPos pos) {		
 		Piece piece = new Piece(color);
-		pieceList[pos.y][pos.x] = piece;
+		pieceArray[pos.y][pos.x] = piece;
+		pieceList.add(piece);
 				
 		reverse(color, pos);
 	}
@@ -104,9 +108,9 @@ public class Board {
 	public List<BoardPos> getReverse(COLOR color){
 		ArrayList<BoardPos> list = new ArrayList<BoardPos>();
 		
-		for(int y = 0;y < pieceList.length;y++) {
-			for(int x = 0;x < pieceList[y].length;x++) {
-				if(pieceList[y][x] != null) {
+		for(int y = 0;y < pieceArray.length;y++) {
+			for(int x = 0;x < pieceArray[y].length;x++) {
+				if(pieceArray[y][x] != null) {
 					continue;
 				}
 				BoardPos pos = new BoardPos(x, y);
@@ -147,10 +151,10 @@ public class Board {
 		int x = pos.x + moveX;
 		int y = pos.y + moveY;
 		while(inBoard(x, y)) {
-			if(pieceList[y][x] == null) {
+			if(pieceArray[y][x] == null) {
 				return 0;
 			}
-			if(pieceList[y][x].color == color) {
+			if(pieceArray[y][x].color == color) {
 				return cnt;
 			}
 			cnt++;
@@ -186,10 +190,10 @@ public class Board {
 		int x = pos.x + moveX;
 		int y = pos.y + moveY;
 		while(inBoard(x, y)) {
-			if(pieceList[y][x].color == color) {
+			if(pieceArray[y][x].color == color) {
 				return;
 			}
-			pieceList[y][x].color = color;
+			pieceArray[y][x].color = color;
 			x = x + moveX;
 			y = y + moveY;
 		}				
@@ -200,9 +204,9 @@ public class Board {
 	 */
 	public void draw() {
 		Drawer.draw(" 12345678");//縦の列の番号
-		for(int i = 0;i < pieceList.length;i++) {
+		for(int i = 0;i < pieceArray.length;i++) {
 			String str = "" + (i + 1);//横の列の番号
-			for(Piece piece : pieceList[i]) {
+			for(Piece piece : pieceArray[i]) {
 				if(piece == null) {
 					str = str + "+";
 				}
@@ -219,18 +223,9 @@ public class Board {
 	 * @return　結果の文字列
 	 */
 	public String createResult() {
-		int b = 0;
-		int w = 0;
-		for(int i = 0;i < pieceList.length;i++) {
-			for(Piece piece : pieceList[i]) {
-				if(piece.color == COLOR.BLACK) {
-					b++;
-				}
-				else {
-					w++;
-				}
-			}
-		}	
-		return "B:" + b + " W:" + w;
+		long b = pieceList.stream().filter(piece -> piece.color == COLOR.BLACK).count();
+		long w = pieceList.stream().filter(piece -> piece.color == COLOR.WHITE).count();
+		
+		return "結果 B:" + b + " W:" + w;
 	}
 }
