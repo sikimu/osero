@@ -4,7 +4,7 @@ package com.sikimu.osero.mode;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
-import com.sikimu.osero.item.BoardPos;
+import com.sikimu.osero.item.Board.Cell;
 
 /**
  * ゲーム中
@@ -51,12 +51,12 @@ public class Game extends Mode {
 		
 		Thinking next;// 次の思考
 		
-		BoardPos pos = move.think(board);
-		board.setPiece(move.getColor(), pos);
+		Cell cell = move.think(board);
+		board.setPiece(move.getPiece(), cell);
 		next = move == firstThinking ? secondThinking : firstThinking;
 
-		if(board.getReverse(next.getColor()).size() == 0) {//相手がめくれない
-			if(board.getReverse(move.getColor()).size() == 0) {// どちらもめくれないので終了
+		if(board.getReverse(next.getPiece()).size() == 0) {//相手がめくれない
+			if(board.getReverse(move.getPiece()).size() == 0) {// どちらもめくれないので終了
 				return new Result(board);
 			}	
 			return this;

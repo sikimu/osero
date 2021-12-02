@@ -1,11 +1,11 @@
 package com.sikimu.osero.item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sikimu.osero.Drawer;
-import com.sikimu.osero.item.piece.Piece;
-import com.sikimu.osero.item.piece.Piece.COLOR;
 
 /**
  * オセロのボード
@@ -14,188 +14,259 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public class Board {
 	
-	/**
-	 * 各方向の移動量
-	 */
-	private final static int DIRECTION[][] = {
-		{0, -1},			
-		{0,  1},	
-		{1, -1},				
-		{1,  0},	
-		{1,  1},	
-		{-1, -1},		
-		{-1,  0},
-		{-1,  1},
-	};
+	/** 横幅 */
+	private final static int WIDTH = 8;
+	
+	/** 縦幅 */
+	private final static int HEIGHT = 8;
 	
 	/**
-	 * 配置情報[y][x]
+	 * マスからみた方向
+	 * @author sikimu
+	 *
 	 */
-	private Piece pieceArray[][] = new Piece[8][8];
+	public enum DIRECTION{
+		TOP,
+		LEFT,
+		RIGHT,
+		BOTTOM,
+		TOP_L,
+		TOP_R,
+		BOTTOM_L,
+		BOTTOM_R,
+	}
 	
-	/** 配置した駒 */
-	private List<Piece> pieceList = new ArrayList<Piece>();
+	/**
+	 * 駒情報
+	 * @author sikimu
+	 *
+	 */
+	public enum PIECE{
+		NONE("+"),		
+		WHITE("W"),
+		BLACK("B");
+		
+		/** 表記用文字列 */
+		public final String colorString;
+		
+		/**
+		 * コンストラクタ
+		 * @param str 表記用文字
+		 */
+		PIECE(String str) {
+			colorString = str;
+		}		
+	}	
+	
+	/**
+	 * マス
+	 * ボード経由でのみ受け取れるようにするのでprivateで作ってgetも座標以外なし
+	 * @author sikimu
+	 *
+	 */
+	public class Cell{
+		private int x;
+		private int y;
+		
+		/**
+		 * 周りのセル
+		 */
+		private Map<DIRECTION, Cell> AroundMap = new HashMap<DIRECTION, Cell>();
+		
+		/** 駒 */
+		private PIECE piece = PIECE.NONE;
+		
+		private Cell(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public int getY() {
+			return y;
+		}
+	}	
+
+	/** マス情報 */
+	private List<Cell> cellList = new ArrayList<Cell>();
 	
 	/**
 	 * コンストラクタ
 	 */
 	public Board() {
+		create();
+		
 		//駒の初期配置
-		setPiece(COLOR.BLACK, new BoardPos(3,3));
-		setPiece(COLOR.BLACK, new BoardPos(4,4));
-		setPiece(COLOR.WHITE, new BoardPos(3,4));
-		setPiece(COLOR.WHITE, new BoardPos(4,3));
-	}
-	
-	/**
-	 * ボードにセットできるか
-	 * @return
-	 */
-	public boolean isSetPiece(BoardPos pos) {
-		return inBoard(pos.x, pos.y) && pieceArray[pos.y][pos.x] == null;
-	}
-	
-	/**
-	 * 指定座標がボード上の座標か？
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean inBoard(int x, int y) {
-		if(x <  0 || getWidth() <= x) {
-			return false;
-		}
-		if(y <  0 || getHeight() <= y) {
-			return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * ボードの横幅
-	 * @return
-	 */
-	public int getWidth() {
-		return pieceArray[0].length;
+		setPiece(PIECE.BLACK, getCell(3,3));
+		setPiece(PIECE.BLACK, getCell(4,4));
+		setPiece(PIECE.WHITE, getCell(3,4));
+		setPiece(PIECE.WHITE, getCell(4,3));
 	}
 
 	/**
-	 * ボードの横幅
-	 * @return
+	 * 指定座標のセルの取得
+	 * @param x
+	 * @param y
+	 * @return 範囲外はnull
 	 */
-	public int getHeight() {
-		return pieceArray.length;
-	}		
+	public Cell getCell(int x, int y) {
+		if(x <  0 || WIDTH <= x) {
+			return null;
+		}
+		if(y <  0 || HEIGHT <= y) {
+			return null;
+		}
+		return cellList.get(x + (y * HEIGHT));
+	}	
 	
 	/**
-	 * 駒の配置
-	 * @param player 配置する色
-	 * @param pos 配置座標
+	 * セルを連結してボードの形にする
 	 */
-	public void setPiece(COLOR color, BoardPos pos) {		
-		Piece piece = new Piece(color);
-		pieceArray[pos.y][pos.x] = piece;
-		pieceList.add(piece);
-				
-		reverse(color, pos);
+	private void create() {
+		//座標の設定
+		for(int i = 0;i < WIDTH * HEIGHT;i++) {
+			Cell cell = new Cell(i / HEIGHT, i % WIDTH);
+			cellList.add(cell);
+			docking(i, cell);
+		}
+	}
+	
+	/**
+	 * マス同士の連結
+	 * あらかじめ隣り合うマス同士をつなげておく
+	 * @param i リスト内の番号
+	 * @param cell 連結する起点セル
+	 */
+	private void docking(int i, Cell cell) {
+		//左右
+		if(i % WIDTH > 0) {
+			docking(cell, DIRECTION.LEFT, cellList.get(i - 1), DIRECTION.RIGHT);
+		}
+		//上下
+		if(i >= WIDTH) {
+			docking(cell, DIRECTION.TOP, cellList.get(i - WIDTH), DIRECTION.BOTTOM);
+		}
+		//左上と右下
+		if(i % WIDTH > 0 && i >= WIDTH) {
+			docking(cell, DIRECTION.TOP_L, cellList.get(i - WIDTH - 1), DIRECTION.BOTTOM_R);
+		}
+		//右上と左下
+		if(i % WIDTH <= WIDTH - 1 && i >= WIDTH) {
+			docking(cell, DIRECTION.TOP_R, cellList.get(i - WIDTH + 1), DIRECTION.BOTTOM_L);
+		}
+	}
+	
+	/**
+	 *　マス同士の連結
+	 * @param cellA マスA
+	 * @param dirA マスAの接続面
+	 * @param cellB マスB
+	 * @param dirB　マスBの接続面
+	 */
+	private void docking(Cell cellA, DIRECTION dirA, 
+			Cell cellB, DIRECTION dirB) {
+		cellA.AroundMap.put(dirA, cellB);
+		cellB.AroundMap.put(dirB, cellA);
+	}
+
+	/**
+	 * 駒の配置
+	 * @param piece 配置する駒
+	 * @param cell 配置マス
+	 */
+	public void setPiece(PIECE piece, Cell cell) {
+		cell.piece = piece;
+		reverse(piece, cell);
 	}
 	
 	/**
 	 * 置ける場所の取得
-	 * @param player　対象の色
+	 * @param piece　対象の駒
 	 * @return 置ける場所のリスト
 	 */
-	public List<BoardPos> getReverse(COLOR color){
-		ArrayList<BoardPos> list = new ArrayList<BoardPos>();
+	public List<Cell> getReverse(PIECE piece){
+		ArrayList<Cell> list = new ArrayList<Cell>();
 		
-		for(int y = 0;y < pieceArray.length;y++) {
-			for(int x = 0;x < pieceArray[y].length;x++) {
-				if(pieceArray[y][x] != null) {
-					continue;
-				}
-				BoardPos pos = new BoardPos(x, y);
-				if(countReverse(color, pos) > 0) {
-					list.add(pos);
-				}
+		for(Cell cell : cellList) {
+			if(cell.piece != PIECE.NONE) {
+				continue;
 			}
-		}	
-		
+			if(countReverse(piece, cell) > 0) {
+				list.add(cell);
+			}
+		}
 		return list;
 	}
 	
 	/**
 	 *　めくれる枚数(全方向)
 	 * @param player 対象の色
-	 * @param pos 対象の位置
+	 * @param cell 対象のマス
 	 * @return
 	 */
-	public int countReverse(COLOR color, BoardPos pos) {
+	public int countReverse(PIECE piece, Cell cell) {
 		int cnt = 0;
 		
-		for(int[] direction : DIRECTION) {
-			cnt += countReverse(color, pos, direction[0], direction[１]);
+		for(DIRECTION dir : cell.AroundMap.keySet()) {
+			cnt += countReverse(piece, cell, dir);
 		}
 		return cnt;
 	}
 	
 	/**
 	 * めくれる枚数
-	 * @param player　対象の色
-	 * @param pos 対象の位置
-	 * @param moveX めくっていく方向x
-	 * @param moveY めくっていく方向y
+	 * @param piece　対象の駒
+	 * @param cell 対象のマス
+	 * @param dir めくっていく方向
 	 * @return めくれる枚数
 	 */
-	public int countReverse(COLOR color, BoardPos pos, int moveX, int moveY) {
+	public int countReverse(PIECE piece, Cell cell, DIRECTION dir) {
 		int cnt = 0;
-		int x = pos.x + moveX;
-		int y = pos.y + moveY;
-		while(inBoard(x, y)) {
-			if(pieceArray[y][x] == null) {
+		while(cell.AroundMap.containsKey(dir)) {
+			cell = cell.AroundMap.get(dir);
+			if(cell.piece == PIECE.NONE) {
 				return 0;
 			}
-			if(pieceArray[y][x].color == color) {
+			if(cell.piece == piece) {
 				return cnt;
 			}
 			cnt++;
-			x = x + moveX;
-			y = y + moveY;
 		}		
 		return 0;
 	}
 
 	/**
 	 * 全方向をめくる
-	 * @param color 対象の色
-	 * @param pos　対象の位置
+	 * @param piece 対象の駒
+	 * @param pos　対象のマス
 	 */
-	public void reverse(COLOR color, BoardPos pos) {
+	public void reverse(PIECE piece, Cell cell) {
 
-		for(int[] direction : DIRECTION) {
-			int cnt = countReverse(color, pos, direction[0], direction[１]);
+		for(DIRECTION dir : cell.AroundMap.keySet()) {
+			int cnt = countReverse(piece, cell, dir);
 			if(cnt > 0) {
-				reverse(color, pos, direction[0], direction[1]);
+				reverse(piece, cell, dir);
 			}
 		}
 	}	
 	
 	/**
 	 * めくる
-	 * @param player　対象の色
-	 * @param pos 対象の位置
-	 * @param moveX めくっていく方向x
-	 * @param moveY めくっていく方向y
+	 * @param piece　対象の駒
+	 * @param cell 対象のマス
+	 * @param dir めくっていく方向
 	 */
-	private void reverse(COLOR color, BoardPos pos, int moveX, int moveY) {	
-		int x = pos.x + moveX;
-		int y = pos.y + moveY;
-		while(inBoard(x, y)) {
-			if(pieceArray[y][x].color == color) {
+	private void reverse(PIECE piece, Cell cell, DIRECTION dir) {	
+
+		while(cell.AroundMap.containsKey(dir)) {
+			cell = cell.AroundMap.get(dir);
+			if(cell.piece == piece) {
 				return;
 			}
-			pieceArray[y][x].color = color;
-			x = x + moveX;
-			y = y + moveY;
+			cell.piece = piece;
 		}				
 	}
 	
@@ -203,16 +274,12 @@ public class Board {
 	 * 描画
 	 */
 	public void draw() {
-		Drawer.draw(" 12345678");//縦の列の番号
-		for(int i = 0;i < pieceArray.length;i++) {
-			String str = "" + (i + 1);//横の列の番号
-			for(Piece piece : pieceArray[i]) {
-				if(piece == null) {
-					str = str + "+";
-				}
-				else {
-					str = str + piece.color.colorString;
-				}
+		Drawer.draw(" 12345678");//縦の列の番号		
+		for(int y = 0;y < HEIGHT;y++) {
+			String str = "" + (y + 1);//横の列の番号
+			for(int x = 0;x < WIDTH;x++) {
+				
+				str = str + getCell(x, y).piece.colorString;
 			}
 			Drawer.draw(str);//1行づつ
 		}		
@@ -223,8 +290,8 @@ public class Board {
 	 * @return　結果の文字列
 	 */
 	public String createResult() {
-		long b = pieceList.stream().filter(piece -> piece.color == COLOR.BLACK).count();
-		long w = pieceList.stream().filter(piece -> piece.color == COLOR.WHITE).count();
+		long b = cellList.stream().filter(cell -> cell.piece == PIECE.BLACK).count();
+		long w = cellList.stream().filter(cell -> cell.piece == PIECE.WHITE).count();
 		
 		return "結果 B:" + b + " W:" + w;
 	}

@@ -2,8 +2,8 @@ package com.sikimu.osero.player.thinking;
 
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
-import com.sikimu.osero.item.BoardPos;
-import com.sikimu.osero.item.piece.Piece.COLOR;
+import com.sikimu.osero.item.Board.Cell;
+import com.sikimu.osero.item.Board.PIECE;
 
 /**
  * CPU
@@ -12,15 +12,15 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public class Computing extends Thinking {
 
-	public Computing(COLOR color) {
-		super(color);
+	public Computing(PIECE piece) {
+		super(piece);
 	}
 
 	@Override
-	public BoardPos think(Board board) {
+	public Cell think(Board board) {
 		
-		BoardPos pos = board.getReverse(getColor()).get(0);
+		Cell cell = board.getReverse(getPiece()).get(0);
 		
-		return pos;
+		return cell;
 	}
 }

@@ -4,8 +4,8 @@ import com.sikimu.osero.Controller;
 import com.sikimu.osero.Drawer;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
-import com.sikimu.osero.item.BoardPos;
-import com.sikimu.osero.item.piece.Piece.COLOR;
+import com.sikimu.osero.item.Board.Cell;
+import com.sikimu.osero.item.Board.PIECE;
 
 /**
  * ユーザー操作で行う
@@ -14,44 +14,44 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public class Playing extends Thinking {
 
-	public Playing(COLOR color) {
-		super(color);
+	public Playing(PIECE piece) {
+		super(piece);
 	}
 
 	@Override
-	public BoardPos think(Board board) {
+	public Cell think(Board board) {
 		
-		BoardPos pos = null;
+		Cell cell = null;
 		
 		do {
-			pos = input(board);
-		}while(pos == null);
+			cell = input(board);
+		}while(cell == null);
 		
-		return pos;
+		return cell;
 	}
 
 	/**
 	 * 入力し直し対応入力処理
 	 * @return 配置箇所
 	 */
-	private BoardPos input(Board board) {
+	private Cell input(Board board) {
 		
 		try {
 			int no = Controller.inputInt();
 			
 			//10の位が横,1の位が縦
-			BoardPos pos = new BoardPos((no / 10) - 1, (no % 10) - 1);
+			Cell cell = board.getCell((no / 10) - 1, (no % 10) - 1);
 			
-			if(board.isSetPiece(pos) == false) {
+			if(cell == null) {
 				Drawer.draw("おけません");
 				return null;
 			}
-			if(board.countReverse(getColor(), pos) == 0) {
+			if(board.countReverse(getPiece(), cell) == 0) {
 				Drawer.draw("めくれません");
 				return null;
 			}
 
-			return pos;
+			return cell;
 		} catch (Exception e) {
 			Drawer.draw("入力が不正です。横縦の順で数値を入力してください。例：右上の角は91");
 			return null;

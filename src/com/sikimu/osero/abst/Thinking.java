@@ -1,8 +1,8 @@
 package com.sikimu.osero.abst;
 
 import com.sikimu.osero.item.Board;
-import com.sikimu.osero.item.BoardPos;
-import com.sikimu.osero.item.piece.Piece.COLOR;
+import com.sikimu.osero.item.Board.Cell;
+import com.sikimu.osero.item.Board.PIECE;
 
 /**
  * 思考の基底クラス
@@ -12,11 +12,11 @@ import com.sikimu.osero.item.piece.Piece.COLOR;
  */
 public abstract class Thinking {
 	
-	/** 自分の色　*/
-	private COLOR color;
+	/** 自分の駒　*/
+	private PIECE piece;
 	
-	public Thinking(COLOR color) {
-		this.color = color;
+	public Thinking(PIECE piece) {
+		this.piece = piece;
 	}
 	
 	/**
@@ -25,9 +25,11 @@ public abstract class Thinking {
 	 * @param board 現在のボード
 	 * @return 配置箇所
 	 */
-	public abstract BoardPos think(Board board);
+	public abstract Cell think(Board board);
 
-	public COLOR getColor() {
-		return color;
+	public PIECE getPiece() {
+		return piece;
 	}
+	
+	
 }
