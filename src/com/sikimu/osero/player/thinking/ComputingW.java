@@ -6,13 +6,13 @@ import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
 
 /**
- * CPU
+ * CPU”’—p
  * @author sikimu
  *
  */
-public class Computing extends Thinking {
+public class ComputingW extends Thinking {
 
-	public Computing(PIECE piece) {
+	public ComputingW(PIECE piece) {
 		super(piece);
 	}
 

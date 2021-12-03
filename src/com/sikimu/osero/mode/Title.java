@@ -5,7 +5,8 @@ import com.sikimu.osero.Drawer;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board.PIECE;
-import com.sikimu.osero.player.thinking.Computing;
+import com.sikimu.osero.player.thinking.ComputingB;
+import com.sikimu.osero.player.thinking.ComputingW;
 import com.sikimu.osero.player.thinking.Playing;
 
 /**
@@ -32,15 +33,15 @@ public class Title extends Mode {
 			switch(no) {
 			case 1:
 				first = new Playing(PIECE.BLACK);
-				second = new Computing(PIECE.WHITE);
+				second = new ComputingW(PIECE.WHITE);
 				break;
 			case 2:
-				first = new Computing(PIECE.BLACK);
+				first = new ComputingB(PIECE.BLACK);
 				second = new Playing(PIECE.WHITE);
 				break;
 			case 3:
-				first = new Computing(PIECE.BLACK);
-				second = new Computing(PIECE.WHITE);
+				first = new ComputingB(PIECE.BLACK);
+				second = new ComputingW(PIECE.WHITE);
 				break;
 			default:
 				no = -1;
