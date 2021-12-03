@@ -6,6 +6,7 @@ import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
+import com.sikimu.osero.item.ThinkingBoard;
 
 /**
  * ユーザー操作で行う
@@ -19,7 +20,7 @@ public class Playing extends Thinking {
 	}
 
 	@Override
-	public Cell think(Board board) {
+	public Cell think(ThinkingBoard board) {
 		
 		Cell cell = null;
 		

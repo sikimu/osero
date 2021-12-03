@@ -1,8 +1,8 @@
 package com.sikimu.osero.abst;
 
-import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
+import com.sikimu.osero.item.ThinkingBoard;
 
 /**
  * 思考の基底クラス
@@ -25,7 +25,7 @@ public abstract class Thinking {
 	 * @param board 現在のボード
 	 * @return 配置箇所
 	 */
-	public abstract Cell think(Board board);
+	public abstract Cell think(ThinkingBoard board);
 
 	public PIECE getPiece() {
 		return piece;

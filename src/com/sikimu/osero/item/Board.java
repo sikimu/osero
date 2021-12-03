@@ -1,7 +1,7 @@
 package com.sikimu.osero.item;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +15,10 @@ import com.sikimu.osero.Drawer;
 public class Board {
 	
 	/** ‰¡• */
-	private final static int WIDTH = 8;
+	protected final static int WIDTH = 8;
 	
 	/** c• */
-	private final static int HEIGHT = 8;
+	protected final static int HEIGHT = 8;
 	
 	/**
 	 * ƒ}ƒX‚©‚ç‚İ‚½•ûŒü
@@ -71,7 +71,7 @@ public class Board {
 		/**
 		 * ü‚è‚ÌƒZƒ‹
 		 */
-		private Map<DIRECTION, Cell> AroundMap = new HashMap<DIRECTION, Cell>();
+		private Map<DIRECTION, Cell> AroundMap = new LinkedHashMap<Board.DIRECTION, Board.Cell>();
 		
 		/** ‹î */
 		private PIECE piece = PIECE.NONE;

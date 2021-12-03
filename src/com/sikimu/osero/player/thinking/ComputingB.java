@@ -1,9 +1,9 @@
 package com.sikimu.osero.player.thinking;
 
 import com.sikimu.osero.abst.Thinking;
-import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
+import com.sikimu.osero.item.ThinkingBoard;
 
 /**
  * CPUçïóp
@@ -17,7 +17,7 @@ public class ComputingB extends Thinking {
 	}
 
 	@Override
-	public Cell think(Board board) {
+	public Cell think(ThinkingBoard board) {
 		
 		Cell cell = board.getReverse(getPiece()).get(0);
 		

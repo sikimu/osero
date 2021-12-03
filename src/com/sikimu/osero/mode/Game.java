@@ -3,8 +3,8 @@ package com.sikimu.osero.mode;
 
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
-import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
+import com.sikimu.osero.item.ThinkingBoard;
 
 /**
  * ゲーム中
@@ -17,7 +17,7 @@ public class Game extends Mode {
 	private Thinking move;
 	
 	/** ゲームで使用するボード */
-	private Board board;
+	private ThinkingBoard board;
 	
 	/** 先手 */
 	private Thinking firstThinking;
@@ -36,7 +36,7 @@ public class Game extends Mode {
 		secondThinking = second;
 		
 		//ボードにプレイヤーをsetする
-		board = new Board();
+		board = new ThinkingBoard();
 		
 		move = firstThinking;
 	}
