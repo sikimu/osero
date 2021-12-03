@@ -20,25 +20,25 @@ public class Game extends Mode {
 	private ThinkingBoard board;
 	
 	/** 先手 */
-	private Thinking firstThinking;
+	private Thinking brackThinking;
 	
 	/** 後手 */
-	private Thinking secondThinking;
+	private Thinking whiteThinking;
 	
 	/**
 	 * コンストラクタ
-	 * @param first 先手
-	 * @param second　後手
+	 * @param thinkB 先手
+	 * @param thinkW　後手
 	 */
-	public Game(Thinking first, Thinking second) {
+	public Game(Thinking thinkB, Thinking thinkW) {
 		
-		firstThinking = first;
-		secondThinking = second;
+		brackThinking = thinkB;
+		whiteThinking = thinkW;
 		
 		//ボードにプレイヤーをsetする
 		board = new ThinkingBoard();
 		
-		move = firstThinking;
+		move = brackThinking;
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class Game extends Mode {
 		
 		Cell cell = move.think(board);
 		board.setPiece(move.getPiece(), cell);
-		next = move == firstThinking ? secondThinking : firstThinking;
+		next = move == brackThinking ? whiteThinking : brackThinking;
 
 		if(board.getReverse(next.getPiece()).size() == 0) {//相手がめくれない
 			if(board.getReverse(move.getPiece()).size() == 0) {// どちらもめくれないので終了
