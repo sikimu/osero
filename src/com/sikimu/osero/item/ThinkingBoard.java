@@ -10,6 +10,10 @@ import java.util.List;
  */
 public class ThinkingBoard extends Board {
 
+	/**
+	 * Šp‚Ìƒ}ƒX‚ğ•Ô‚·
+	 * @return
+	 */
 	public List<Cell> getCorner(){
 		ArrayList<Cell> list = new ArrayList<Board.Cell>();
 		
@@ -20,4 +24,6 @@ public class ThinkingBoard extends Board {
 		
 		return list;
 	}	
+	
+	
 }
