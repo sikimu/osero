@@ -1,9 +1,11 @@
 
 package com.sikimu.osero.mode;
 
+import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board.Cell;
+import com.sikimu.osero.item.Board.PIECE;
 import com.sikimu.osero.item.ThinkingBoard;
 
 /**
@@ -24,7 +26,7 @@ public class Game extends Mode {
 	
 	/** 後手 */
 	private Thinking whiteThinking;
-	
+
 	/**
 	 * コンストラクタ
 	 * @param thinkB 先手
@@ -34,7 +36,7 @@ public class Game extends Mode {
 		
 		brackThinking = thinkB;
 		whiteThinking = thinkW;
-		
+
 		//ボードにプレイヤーをsetする
 		board = new ThinkingBoard();
 		
@@ -51,12 +53,13 @@ public class Game extends Mode {
 		
 		Thinking next;// 次の思考
 		
-		Cell cell = move.think(board);
+		Cell cell = move.getCell(board);
 		board.setPiece(move.getPiece(), cell);
 		next = move == brackThinking ? whiteThinking : brackThinking;
 
 		if(board.getReverse(next.getPiece()).size() == 0) {//相手がめくれない
 			if(board.getReverse(move.getPiece()).size() == 0) {// どちらもめくれないので終了
+				setLosing();
 				return new Result(board);
 			}	
 			return this;
@@ -65,4 +68,22 @@ public class Game extends Mode {
 		return this;
 	}
 
+	/**
+	 * 負けを登録
+	 */
+	private void setLosing() {
+		PIECE win = board.getWin();
+		switch(win){
+			case BLACK:
+				LosingConfirmedInfo.add(whiteThinking);
+				break;
+			case WHITE:
+				LosingConfirmedInfo.add(brackThinking);
+				break;
+			case NONE:
+				LosingConfirmedInfo.add(brackThinking);
+				LosingConfirmedInfo.add(whiteThinking);
+				break;
+		}
+	}
 }

@@ -23,7 +23,5 @@ public class ThinkingBoard extends Board {
 		list.add(getCell(0, WIDTH - 1));
 		
 		return list;
-	}	
-	
-	
+	}		
 }

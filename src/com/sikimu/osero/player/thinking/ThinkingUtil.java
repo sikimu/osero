@@ -1,5 +1,6 @@
 package com.sikimu.osero.player.thinking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sikimu.osero.item.Board.Cell;
@@ -19,14 +20,17 @@ public class ThinkingUtil {
 	 * @param board
 	 * @return Ç®ÇØÇ»Ç¢èÍçáÇÕnull
 	 */
-	public static Cell searchSetCorner(PIECE piece, ThinkingBoard board) {
-		List<Cell> list = board.getCorner();
+	public static List<Cell> searchSetCorner(PIECE piece, ThinkingBoard board) {
+
+		List<Cell> list = new ArrayList<Cell>();
+		
+		List<Cell> cornerlist = board.getCorner();		
 		for(Cell cell : board.getReverse(piece)) {
-			if(list.contains(cell)) {
-				return cell;
+			if(cornerlist.contains(cell)) {
+				list.add(cell);
 			}
 		}
-		return null;
+		return list;
 	}
 	
 }

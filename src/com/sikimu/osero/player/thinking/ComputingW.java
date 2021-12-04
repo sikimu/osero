@@ -1,5 +1,9 @@
 package com.sikimu.osero.player.thinking;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
@@ -19,14 +23,20 @@ public class ComputingW extends Thinking {
 	@Override
 	public Cell think(ThinkingBoard board) {		
 
-		Cell cell = null;
+		ArrayList<Cell> list = new ArrayList<Cell>();
+
+		List<Cell> corners = ThinkingUtil.searchSetCorner(getPiece(), board);
+		list.addAll(corners);
+
+		list.addAll(board.getReverse(getPiece()));
 		
-		cell = ThinkingUtil.searchSetCorner(getPiece(), board);
-		if(cell != null) {
-			return cell;
+		LosingConfirmedInfo.deleteConfirmed((Thinking)this, list);
+		
+		if(list.size() > 0) {
+			return list.get(0);
 		}
-		
-		cell = board.getReverse(getPiece()).get(0);		
-		return cell;
+		else {
+			return board.getReverse(getPiece()).get(0);
+		}
 	}
 }

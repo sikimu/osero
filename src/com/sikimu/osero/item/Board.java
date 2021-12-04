@@ -88,16 +88,23 @@ public class Board {
 		public int getY() {
 			return y;
 		}
+		
+		/**
+		 * x + "" + y
+		 */
+		public String toString() {
+			return x + "" + y;
+		}
 	}	
 
 	/** マス情報 */
 	private List<Cell> cellList = new ArrayList<Cell>();
-	
+
 	/**
 	 * コンストラクタ
 	 */
 	public Board() {
-		create();
+		create();	
 		
 		//駒の初期配置
 		setPiece(PIECE.BLACK, getCell(3,3));
@@ -294,5 +301,22 @@ public class Board {
 		long w = cellList.stream().filter(cell -> cell.piece == PIECE.WHITE).count();
 		
 		return "結果 B:" + b + " W:" + w;
+	}
+	
+	/**
+	 * 勝っている駒を返す
+	 * @return 引き分けはNONE
+	 */
+	public PIECE getWin() {
+		long b = cellList.stream().filter(cell -> cell.piece == PIECE.BLACK).count();
+		long w = cellList.stream().filter(cell -> cell.piece == PIECE.WHITE).count();
+		
+		if(b > w) {
+			return PIECE.BLACK;
+		}
+		if(b < w) {
+			return PIECE.WHITE;
+		}
+		return PIECE.NONE;
 	}
 }
