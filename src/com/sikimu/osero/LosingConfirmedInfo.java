@@ -32,7 +32,23 @@ public class LosingConfirmedInfo {
 	 * @param setedPieceList
 	 */
 	public static void add(Thinking thinking) {
-		confirmedMap.get(thinking.getPiece()).add(thinking.getLog());
+		
+		List<String> confirmedList = confirmedMap.get(thinking.getPiece());
+		String log = thinking.getLog();
+		
+		List<String> deleteList = new ArrayList<String>();
+		for(String confirmed : confirmedList) {
+			//不要なものを削除
+			if(confirmed.startsWith(log)) {
+				deleteList.add(confirmed);
+			}
+			//追加不要
+			if(log.startsWith(confirmed)) {
+				return;
+			}
+		}
+		confirmedList.removeAll(deleteList);				
+		confirmedList.add(log);		
 	}
 	
 	/**
@@ -54,7 +70,7 @@ public class LosingConfirmedInfo {
 		list.removeAll(deleteList);
 		//0件ならこの時点で負け確定とする
 		if(list.size() == 0) {
-			confirmedList.add(log);
+			add(thinking);
 		}
 	}
 
