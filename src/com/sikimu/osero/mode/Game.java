@@ -6,6 +6,8 @@ import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
+import com.sikimu.osero.player.thinking.ComputingB;
+import com.sikimu.osero.player.thinking.ComputingW;
 import com.sikimu.osero.item.ThinkingBoard;
 
 /**
@@ -27,12 +29,17 @@ public class Game extends Mode {
 	/** 後手 */
 	private Thinking whiteThinking;
 
+	/** 繰り返し回数 */
+	private int repeat;
+	
 	/**
 	 * コンストラクタ
 	 * @param thinkB 先手
 	 * @param thinkW　後手
 	 */
-	public Game(Thinking thinkB, Thinking thinkW) {
+	public Game(Thinking thinkB, Thinking thinkW, int repeat) {
+		
+		this.repeat = repeat;
 		
 		brackThinking = thinkB;
 		whiteThinking = thinkW;
@@ -60,6 +67,12 @@ public class Game extends Mode {
 		if(board.getReverse(next.getPiece()).size() == 0) {//相手がめくれない
 			if(board.getReverse(move.getPiece()).size() == 0) {// どちらもめくれないので終了
 				setLosing();
+				//連続再戦(CPUのみ)
+				if(repeat-- > 0) {
+					Thinking first = new ComputingB(PIECE.BLACK);
+					Thinking second = new ComputingW(PIECE.WHITE);
+					return new Game(first, second, repeat);
+				}
 				return new Result(board);
 			}	
 			return this;

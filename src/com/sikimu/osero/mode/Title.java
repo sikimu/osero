@@ -51,13 +51,18 @@ public class Title extends Mode {
 			case 5:
 				LosingConfirmedInfo.printLog(PIECE.WHITE);
 				no = -1;
-				break;	
+				break;
+			//ó†ÉÇÅ[Éh
+			case 1000:
+				first = new ComputingB(PIECE.BLACK);
+				second = new ComputingW(PIECE.WHITE);
+				return new Game(first, second, 1000);
 			default:
 				no = -1;
 				break;
 			}
 		}while(no == -1);
-		return new Game(first, second);
+		return new Game(first, second, 0);
 	}
 	
 	/**
