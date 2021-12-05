@@ -2,6 +2,7 @@ package com.sikimu.osero.mode;
 
 import com.sikimu.osero.Controller;
 import com.sikimu.osero.Drawer;
+import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board.PIECE;
@@ -20,7 +21,7 @@ public class Title extends Mode {
 	@Override
 	public void draw() {
 		Drawer.draw("コンソールオセロ");
-		Drawer.draw("先手:1 後手:2 CPUのみ:3");
+		Drawer.draw("先手:1 後手:2 CPUのみ:3 黒ログ:4 白ログ:5");
 	}
 
 	@Override
@@ -43,6 +44,14 @@ public class Title extends Mode {
 				first = new ComputingB(PIECE.BLACK);
 				second = new ComputingW(PIECE.WHITE);
 				break;
+			case 4:
+				LosingConfirmedInfo.printLog(PIECE.BLACK);
+				no = -1;
+				break;
+			case 5:
+				LosingConfirmedInfo.printLog(PIECE.WHITE);
+				no = -1;
+				break;	
 			default:
 				no = -1;
 				break;

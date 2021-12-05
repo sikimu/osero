@@ -53,6 +53,19 @@ public class LosingConfirmedInfo {
 		}
 		list.removeAll(deleteList);
 		//0件ならこの時点で負け確定とする
-		confirmedList.add(log);
+		if(list.size() == 0) {
+			confirmedList.add(log);
+		}
+	}
+
+	/**
+	 * ログの出力
+	 * @param piece
+	 */
+	public static void printLog(PIECE piece) {
+		
+		for(String log : confirmedMap.get(piece)) {
+			System.out.println(log);
+		}
 	}
 }

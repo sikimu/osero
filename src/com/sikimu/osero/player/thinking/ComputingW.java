@@ -25,18 +25,19 @@ public class ComputingW extends Thinking {
 
 		ArrayList<Cell> list = new ArrayList<Cell>();
 
-		List<Cell> corners = ThinkingUtil.searchSetCorner(getPiece(), board);
-		list.addAll(corners);
-
 		list.addAll(board.getReverse(getPiece()));
 		
 		LosingConfirmedInfo.deleteConfirmed((Thinking)this, list);
-		
-		if(list.size() > 0) {
-			return list.get(0);
-		}
-		else {
+		if(list.size() == 0) {
 			return board.getReverse(getPiece()).get(0);
 		}
+		
+		List<Cell> corners = ThinkingUtil.searchSetCorner(getPiece(), board);
+		for (Cell cell : list) {
+			if(corners.contains(cell)){
+				return cell;
+			}
+		}
+		return list.get(0);
 	}
 }
