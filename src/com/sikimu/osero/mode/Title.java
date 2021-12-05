@@ -53,10 +53,10 @@ public class Title extends Mode {
 				no = -1;
 				break;
 			//ó†ÉÇÅ[Éh
-			case 1000:
+			case 0:
 				first = new ComputingB(PIECE.BLACK);
 				second = new ComputingW(PIECE.WHITE);
-				return new Game(first, second, 1000);
+				return new Game(first, second, 100000);
 			default:
 				no = -1;
 				break;

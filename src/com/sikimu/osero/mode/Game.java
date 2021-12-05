@@ -52,6 +52,13 @@ public class Game extends Mode {
 	
 	@Override
 	public void draw() {
+		
+		//˜Aí’†‚Í•\¦‚µ‚È‚¢
+		if(repeat > 0) {
+			System.out.println("repeat" + repeat);
+			return;
+		}
+		
 		board.draw();
 	}
 

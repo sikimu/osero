@@ -1,11 +1,14 @@
 package com.sikimu.osero;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.data.confirmed.LosingBlack;
+import com.sikimu.osero.data.confirmed.LosingWhite;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
 
@@ -23,7 +26,8 @@ public class LosingConfirmedInfo {
 		confirmedMap = new HashMap<PIECE, List<String>>();
 		confirmedMap.put(PIECE.BLACK, new ArrayList<String>());
 		confirmedMap.put(PIECE.WHITE, new ArrayList<String>());
-		confirmedMap.put(PIECE.NONE, new ArrayList<String>());
+		confirmedMap.get(PIECE.BLACK).addAll(Arrays.asList(LosingBlack.data));
+		confirmedMap.get(PIECE.WHITE).addAll(Arrays.asList(LosingWhite.data));
 	}
 	
 	/**
@@ -81,7 +85,7 @@ public class LosingConfirmedInfo {
 	public static void printLog(PIECE piece) {
 		
 		for(String log : confirmedMap.get(piece)) {
-			System.out.println(log);
+			System.out.println("\"" + log + "\",");
 		}
 	}
 }
