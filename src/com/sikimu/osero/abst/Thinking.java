@@ -1,9 +1,5 @@
 package com.sikimu.osero.abst;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
 import com.sikimu.osero.item.ThinkingBoard;
@@ -19,9 +15,6 @@ public abstract class Thinking {
 	/** 自分の駒　*/
 	private PIECE piece;
 	
-	/** 配置情報　*/
-	private List<Cell> setLog = new ArrayList<Board.Cell>();
-	
 	public Thinking(PIECE piece) {
 		this.piece = piece;
 	}
@@ -32,7 +25,6 @@ public abstract class Thinking {
 	 */
 	public Cell getCell(ThinkingBoard board) {
 		Cell cell = think(board);
-		setLog.add(cell);
 		return cell;
 	}
 	
@@ -47,18 +39,5 @@ public abstract class Thinking {
 	public PIECE getPiece() {
 		return piece;
 	}
-
-	/**
-	 * ログの結果を文字列で返す
-	 * @return
-	 */
-	public String getLog() {
-		String str = "";
-		for (Cell cell : setLog) {
-			str = str + cell.toString();
-		}
-		return str;
-	}
-	
 	
 }

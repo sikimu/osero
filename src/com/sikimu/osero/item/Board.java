@@ -20,6 +20,9 @@ public class Board {
 	/** 縦幅 */
 	protected final static int HEIGHT = 8;
 	
+	/** 配置情報　*/
+	private String log = "";			
+	
 	/**
 	 * マスからみた方向
 	 * @author sikimu
@@ -55,7 +58,7 @@ public class Board {
 		 */
 		PIECE(String str) {
 			colorString = str;
-		}		
+		}
 	}	
 	
 	/**
@@ -90,10 +93,10 @@ public class Board {
 		}
 		
 		/**
-		 * x + "" + y
+		 * 色 + x + "" + y
 		 */
 		public String toString() {
-			return x + "" + y;
+			return piece.colorString + x + "" + y;
 		}
 	}	
 
@@ -187,6 +190,7 @@ public class Board {
 	public void setPiece(PIECE piece, Cell cell) {
 		cell.piece = piece;
 		reverse(piece, cell);
+		log = log + cell.toString();
 	}
 	
 	/**
@@ -319,4 +323,12 @@ public class Board {
 		}
 		return PIECE.NONE;
 	}
+	
+	/**
+	 * ログの結果を文字列で返す
+	 * @return
+	 */
+	public String getLog() {
+		return log;
+	}		
 }

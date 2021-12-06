@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 public class ThinkingBoard extends Board {
-
+	
 	/**
 	 * Šp‚Ìƒ}ƒX‚ð•Ô‚·
 	 * @return
@@ -23,5 +23,5 @@ public class ThinkingBoard extends Board {
 		list.add(getCell(0, WIDTH - 1));
 		
 		return list;
-	}		
+	}
 }

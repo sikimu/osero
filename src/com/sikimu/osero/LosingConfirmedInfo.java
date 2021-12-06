@@ -2,13 +2,9 @@ package com.sikimu.osero;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.sikimu.osero.abst.Thinking;
-import com.sikimu.osero.data.confirmed.LosingBlack;
-import com.sikimu.osero.data.confirmed.LosingWhite;
+import com.sikimu.osero.data.confirmed.LosingData;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
 
@@ -20,25 +16,21 @@ import com.sikimu.osero.item.Board.PIECE;
 public class LosingConfirmedInfo {
 	
 	/** 勝てなかったリスト */
-	private static Map<PIECE, List<String>> confirmedMap;
+	private static List<String> confirmedList = new ArrayList<String>();
 	
 	static {
-		confirmedMap = new HashMap<PIECE, List<String>>();
-		confirmedMap.put(PIECE.BLACK, new ArrayList<String>());
-		confirmedMap.put(PIECE.WHITE, new ArrayList<String>());
-		confirmedMap.get(PIECE.BLACK).addAll(Arrays.asList(LosingBlack.data));
-		confirmedMap.get(PIECE.WHITE).addAll(Arrays.asList(LosingWhite.data));
+		confirmedList.addAll(Arrays.asList(LosingData.data));
 	}
 	
+
 	/**
-	 * 負け情報の追加
-	 * @param loser
-	 * @param setedPieceList
+	 * 負けの追加
+	 * @param piece 負けた駒
+	 * @param log ログ
 	 */
-	public static void add(Thinking thinking) {
+	public static void add(PIECE piece, String log) {
 		
-		List<String> confirmedList = confirmedMap.get(thinking.getPiece());
-		String log = thinking.getLog();
+		log = piece.colorString + log;
 		
 		List<String> deleteList = new ArrayList<String>();
 		for(String confirmed : confirmedList) {
@@ -57,24 +49,25 @@ public class LosingConfirmedInfo {
 	
 	/**
 	 * 負け確定のセルを削除
-	 * @param thinking 思考
+	 * @param log ログ
 	 * @param list 配置候補
 	 * @return
 	 */
-	public static void deleteConfirmed(Thinking thinking, ArrayList<Cell> list){
+	public static void deleteConfirmed(PIECE piece, String log, ArrayList<Cell> list){
 		List<Cell> deleteList = new ArrayList<Cell>();
-		
-		List<String> confirmedList = confirmedMap.get(thinking.getPiece());
-		String log = thinking.getLog();
+
 		for(Cell cell : list) {
-			if(confirmedList.contains(log + cell.toString())) {
+			String code = piece.colorString + cell.getX() + "" + cell.getY();
+			if(confirmedList.contains(piece.colorString + log + code)) {
 				deleteList.add(cell);
 			}
 		}
 		list.removeAll(deleteList);
 		//0件ならこの時点で負け確定とする
 		if(list.size() == 0) {
-			add(thinking);
+			//1つ前の自分の色+2まで削る
+			log = log.substring(0, log.lastIndexOf(piece.colorString) + 3);
+			add(piece, log);
 		}
 	}
 
@@ -82,9 +75,9 @@ public class LosingConfirmedInfo {
 	 * ログの出力
 	 * @param piece
 	 */
-	public static void printLog(PIECE piece) {
+	public static void printLog() {
 		
-		for(String log : confirmedMap.get(piece)) {
+		for(String log : confirmedList) {
 			System.out.println("\"" + log + "\",");
 		}
 	}

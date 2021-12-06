@@ -10,13 +10,13 @@ import com.sikimu.osero.item.Board.PIECE;
 import com.sikimu.osero.item.ThinkingBoard;
 
 /**
- * CPUîíóp
+ * CPUçïóp
  * @author sikimu
  *
  */
-public class ComputingW extends Thinking {
+public class Computing extends Thinking {
 
-	public ComputingW(PIECE piece) {
+	public Computing(PIECE piece) {
 		super(piece);
 	}
 
@@ -27,7 +27,7 @@ public class ComputingW extends Thinking {
 
 		list.addAll(board.getReverse(getPiece()));
 		
-		LosingConfirmedInfo.deleteConfirmed((Thinking)this, list);
+		LosingConfirmedInfo.deleteConfirmed(getPiece(), board.getLog(), list);
 		if(list.size() == 0) {
 			return board.getReverse(getPiece()).get(0);
 		}

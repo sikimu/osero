@@ -1,11 +1,11 @@
 package com.sikimu.osero.data.confirmed;
 
 /**
- * 
+ * •‰‚¯ƒf[ƒ^
  * @author sikimu
  *
  */
-public class LosingWhite {
+public class LosingData {
 	
 	public final static String data[] = {
 	};

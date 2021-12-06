@@ -1,4 +1,3 @@
-
 package com.sikimu.osero.mode;
 
 import com.sikimu.osero.LosingConfirmedInfo;
@@ -6,9 +5,8 @@ import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
-import com.sikimu.osero.player.thinking.ComputingB;
-import com.sikimu.osero.player.thinking.ComputingW;
 import com.sikimu.osero.item.ThinkingBoard;
+import com.sikimu.osero.player.thinking.Computing;
 
 /**
  * ƒQ[ƒ€’†
@@ -76,8 +74,8 @@ public class Game extends Mode {
 				setLosing();
 				//˜A‘±Äí(CPU‚Ì‚Ý)
 				if(repeat-- > 0) {
-					Thinking first = new ComputingB(PIECE.BLACK);
-					Thinking second = new ComputingW(PIECE.WHITE);
+					Thinking first = new Computing(PIECE.BLACK);
+					Thinking second = new Computing(PIECE.WHITE);
 					return new Game(first, second, repeat);
 				}
 				return new Result(board);
@@ -95,14 +93,14 @@ public class Game extends Mode {
 		PIECE win = board.getWin();
 		switch(win){
 			case BLACK:
-				LosingConfirmedInfo.add(whiteThinking);
+				LosingConfirmedInfo.add(PIECE.WHITE, board.getLog());
 				break;
 			case WHITE:
-				LosingConfirmedInfo.add(brackThinking);
+				LosingConfirmedInfo.add(PIECE.BLACK, board.getLog());
 				break;
 			case NONE:
-				LosingConfirmedInfo.add(brackThinking);
-				LosingConfirmedInfo.add(whiteThinking);
+				LosingConfirmedInfo.add(PIECE.BLACK, board.getLog());
+				LosingConfirmedInfo.add(PIECE.WHITE, board.getLog());
 				break;
 		}
 	}
