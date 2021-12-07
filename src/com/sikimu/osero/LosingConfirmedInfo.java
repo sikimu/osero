@@ -30,6 +30,9 @@ public class LosingConfirmedInfo {
 	 */
 	public static void add(PIECE piece, String log) {
 		
+		//1つ前の自分の色+2まで削る
+		log = log.substring(0, log.lastIndexOf(piece.colorString) + 3);
+		
 		log = piece.colorString + log;
 		
 		List<String> deleteList = new ArrayList<String>();
@@ -65,8 +68,6 @@ public class LosingConfirmedInfo {
 		list.removeAll(deleteList);
 		//0件ならこの時点で負け確定とする
 		if(list.size() == 0) {
-			//1つ前の自分の色+2まで削る
-			log = log.substring(0, log.lastIndexOf(piece.colorString) + 3);
 			add(piece, log);
 		}
 	}
