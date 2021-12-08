@@ -75,7 +75,6 @@ public class Game extends Mode {
 				if(repeat-- > 0) {
 					Thinking first = new Computing(PIECE.BLACK);
 					Thinking second = new Computing(PIECE.WHITE);
-					System.out.println("repeat" + repeat);
 					return new Game(first, second, repeat);
 				}
 				return new Result(board);
