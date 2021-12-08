@@ -5,6 +5,7 @@ import com.sikimu.osero.Drawer;
 import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.PIECE;
 import com.sikimu.osero.player.thinking.Computing;
 import com.sikimu.osero.player.thinking.Playing;
@@ -56,7 +57,7 @@ public class Title extends Mode {
 				lastTime = System.currentTimeMillis();
 				first = new Computing(PIECE.BLACK);
 				second = new Computing(PIECE.WHITE);
-				return new LearningGame(first, second, 10000);
+				return new LearningGame(new Board(), first, second, 10000);
 			default:
 				no = -1;
 				break;

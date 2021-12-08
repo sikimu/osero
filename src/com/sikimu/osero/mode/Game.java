@@ -1,12 +1,9 @@
 package com.sikimu.osero.mode;
 
-import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
-import com.sikimu.osero.item.Board.PIECE;
-import com.sikimu.osero.item.ThinkingBoard;
-import com.sikimu.osero.player.thinking.Computing;
 
 /**
  * ゲーム中
@@ -19,7 +16,7 @@ public class Game extends Mode {
 	private Thinking move;
 	
 	/** ゲームで使用するボード */
-	private ThinkingBoard board;
+	private Board board;
 	
 	/** 先手 */
 	private Thinking brackThinking;
@@ -38,7 +35,7 @@ public class Game extends Mode {
 		whiteThinking = thinkW;
 
 		//ボードにプレイヤーをsetする
-		board = new ThinkingBoard();
+		board = new Board();
 		
 		move = brackThinking;
 	}

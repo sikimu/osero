@@ -3,9 +3,9 @@ package com.sikimu.osero.mode;
 import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Mode;
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
-import com.sikimu.osero.item.ThinkingBoard;
 import com.sikimu.osero.player.thinking.Computing;
 
 /**
@@ -20,7 +20,7 @@ public class LearningGame extends Mode {
 	private Thinking move;
 	
 	/** ゲームで使用するボード */
-	private ThinkingBoard board;
+	private Board board;
 	
 	/** 先手 */
 	private Thinking brackThinking;
@@ -36,7 +36,7 @@ public class LearningGame extends Mode {
 	 * @param thinkB 先手
 	 * @param thinkW　後手
 	 */
-	public LearningGame(Thinking thinkB, Thinking thinkW, int repeat) {
+	public LearningGame(Board board, Thinking thinkB, Thinking thinkW, int repeat) {
 		
 		this.repeat = repeat;
 		
@@ -44,7 +44,7 @@ public class LearningGame extends Mode {
 		whiteThinking = thinkW;
 
 		//ボードにプレイヤーをsetする
-		board = new ThinkingBoard();
+		this.board = board;
 		
 		move = brackThinking;
 	}
@@ -76,7 +76,7 @@ public class LearningGame extends Mode {
 				if(repeat-- > 0) {
 					Thinking first = new Computing(PIECE.BLACK);
 					Thinking second = new Computing(PIECE.WHITE);
-					return new LearningGame(first, second, repeat);
+					return new LearningGame(new Board(), first, second, repeat);
 				}
 				return new Result(board);
 			}	

@@ -1,13 +1,12 @@
 package com.sikimu.osero.player.thinking;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.sikimu.osero.LosingConfirmedInfo;
 import com.sikimu.osero.abst.Thinking;
+import com.sikimu.osero.item.Board;
 import com.sikimu.osero.item.Board.Cell;
 import com.sikimu.osero.item.Board.PIECE;
-import com.sikimu.osero.item.ThinkingBoard;
 
 /**
  * CPUçïóp
@@ -21,7 +20,7 @@ public class Computing extends Thinking {
 	}
 
 	@Override
-	public Cell think(ThinkingBoard board) {		
+	public Cell think(Board board) {		
 
 		ArrayList<Cell> list = new ArrayList<Cell>();
 
@@ -32,12 +31,6 @@ public class Computing extends Thinking {
 			return board.getReverse(getPiece()).get(0);
 		}
 		
-		List<Cell> corners = ThinkingUtil.searchSetCorner(getPiece(), board);
-		for (Cell cell : list) {
-			if(corners.contains(cell)){
-				return cell;
-			}
-		}
 		return list.get(0);
 	}
 }
