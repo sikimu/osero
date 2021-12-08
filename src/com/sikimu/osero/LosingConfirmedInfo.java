@@ -2,7 +2,9 @@ package com.sikimu.osero;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.sikimu.osero.data.confirmed.LosingData;
 import com.sikimu.osero.item.Board.Cell;
@@ -16,7 +18,7 @@ import com.sikimu.osero.item.Board.PIECE;
 public class LosingConfirmedInfo {
 	
 	/** Ÿ‚Ä‚È‚©‚Á‚½ƒŠƒXƒg */
-	private static List<String> confirmedList = new ArrayList<String>();
+	private static Set<String> confirmedList = new HashSet<String>();
 	
 	static {
 		confirmedList.addAll(Arrays.asList(LosingData.data));
