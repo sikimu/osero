@@ -115,6 +115,20 @@ public class Board {
 		setPiece(PIECE.WHITE, getCell(3,4));
 		setPiece(PIECE.WHITE, getCell(4,3));
 	}
+	
+	/**
+	 * コピー作成
+	 * @param board
+	 * @return
+	 */
+	public static Board createCopy(Board board) {
+		Board newBoard = new Board();
+		for(int i = 0;i < newBoard.cellList.size();i++) {
+			newBoard.cellList.get(i).piece = board.cellList.get(i).piece;
+		}
+		newBoard.log = board.log;
+		return newBoard;
+	}
 
 	/**
 	 * 指定座標のセルの取得

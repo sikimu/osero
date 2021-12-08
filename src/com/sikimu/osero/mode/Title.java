@@ -56,13 +56,13 @@ public class Title extends Mode {
 				lastTime = System.currentTimeMillis();
 				first = new Computing(PIECE.BLACK);
 				second = new Computing(PIECE.WHITE);
-				return new Game(first, second, 10000);
+				return new LearningGame(first, second, 10000);
 			default:
 				no = -1;
 				break;
 			}
 		}while(no == -1);
-		return new Game(first, second, 0);
+		return new Game(first, second);
 	}
 	
 	/**

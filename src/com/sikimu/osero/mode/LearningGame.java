@@ -9,11 +9,12 @@ import com.sikimu.osero.item.ThinkingBoard;
 import com.sikimu.osero.player.thinking.Computing;
 
 /**
- * ゲーム中
+ * ゲーム中(Learning専用)
+ * もう少しクラスの作り方を検討したい
  * @author sikimu
  *
  */
-public class Game extends Mode {
+public class LearningGame extends Mode {
 	
 	/** 手番 **/
 	private Thinking move;
@@ -27,13 +28,18 @@ public class Game extends Mode {
 	/** 後手 */
 	private Thinking whiteThinking;
 
+	/** 繰り返し回数 */
+	private int repeat;
+	
 	/**
 	 * コンストラクタ
 	 * @param thinkB 先手
 	 * @param thinkW　後手
 	 */
-	public Game(Thinking thinkB, Thinking thinkW) {
-
+	public LearningGame(Thinking thinkB, Thinking thinkW, int repeat) {
+		
+		this.repeat = repeat;
+		
 		brackThinking = thinkB;
 		whiteThinking = thinkW;
 
@@ -45,6 +51,11 @@ public class Game extends Mode {
 	
 	@Override
 	public void draw() {
+		
+		//連戦中は表示しない
+		if(repeat > 0) {
+			return;
+		}
 		
 		board.draw();
 	}
@@ -60,11 +71,37 @@ public class Game extends Mode {
 
 		if(board.getReverse(next.getPiece()).size() == 0) {//相手がめくれない
 			if(board.getReverse(move.getPiece()).size() == 0) {// どちらもめくれないので終了
+				setLosing();
+				//連続再戦(CPUのみ)
+				if(repeat-- > 0) {
+					Thinking first = new Computing(PIECE.BLACK);
+					Thinking second = new Computing(PIECE.WHITE);
+					return new LearningGame(first, second, repeat);
+				}
 				return new Result(board);
 			}	
 			return this;
 		}		
 		move = next;
 		return this;
+	}
+
+	/**
+	 * 負けを登録
+	 */
+	private void setLosing() {
+		PIECE win = board.getWin();
+		switch(win){
+			case BLACK:
+				LosingConfirmedInfo.add(PIECE.WHITE, board.getLog());
+				break;
+			case WHITE:
+				LosingConfirmedInfo.add(PIECE.BLACK, board.getLog());
+				break;
+			case NONE:
+				LosingConfirmedInfo.add(PIECE.BLACK, board.getLog());
+				LosingConfirmedInfo.add(PIECE.WHITE, board.getLog());
+				break;
+		}
 	}
 }
