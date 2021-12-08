@@ -17,8 +17,12 @@ import com.sikimu.osero.player.thinking.Playing;
  */
 public class Title extends Mode {
 
+	/** 時間計測用　*/
+	private static long lastTime;
+	
 	@Override
 	public void draw() {
+		System.out.println(System.currentTimeMillis() - lastTime);
 		Drawer.draw("コンソールオセロ");
 		Drawer.draw("先手:1 後手:2 CPUのみ:3 ログ:4");
 	}
@@ -49,9 +53,10 @@ public class Title extends Mode {
 				break;
 			//裏モード
 			case 0:
+				lastTime = System.currentTimeMillis();
 				first = new Computing(PIECE.BLACK);
 				second = new Computing(PIECE.WHITE);
-				return new Game(first, second, 100000);
+				return new Game(first, second, 10000);
 			default:
 				no = -1;
 				break;
