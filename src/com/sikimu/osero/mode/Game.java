@@ -52,6 +52,9 @@ public class Game extends Mode {
 		Thinking next;// éüÇÃévçl
 		
 		Cell cell = move.getCell(board);
+		if(cell == null) {
+			cell = board.getReverse(move.getPiece()).get(0);
+		}
 		board.setPiece(move.getPiece(), cell);
 		next = move == brackThinking ? whiteThinking : brackThinking;
 

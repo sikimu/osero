@@ -28,7 +28,7 @@ public class Computing extends Thinking {
 		
 		LosingConfirmedInfo.deleteConfirmed(getPiece(), board.getLog(), list);
 		if(list.size() == 0) {
-			return board.getReverse(getPiece()).get(0);
+			return null;
 		}
 		
 		return list.get(0);

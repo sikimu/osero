@@ -339,6 +339,15 @@ public class Board {
 	}
 	
 	/**
+	 * ”Õã‚Ì‹î‚Ì”
+	 * @param piece
+	 * @return
+	 */
+	public int getCount(PIECE piece) {
+		return (int)cellList.stream().filter(cell -> cell.piece == piece).count();
+	}
+	
+	/**
 	 * ƒƒO‚ÌŒ‹‰Ê‚ğ•¶š—ñ‚Å•Ô‚·
 	 * @return
 	 */

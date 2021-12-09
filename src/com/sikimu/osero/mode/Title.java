@@ -57,7 +57,7 @@ public class Title extends Mode {
 				lastTime = System.currentTimeMillis();
 				first = new Computing(PIECE.BLACK);
 				second = new Computing(PIECE.WHITE);
-				return new LearningGame(new Board(), first, second, 10000);
+				return new LearningGame(new Board(), first, second, first, 20000);
 			default:
 				no = -1;
 				break;

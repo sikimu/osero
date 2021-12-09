@@ -22,6 +22,12 @@ public class LearningGame extends Mode {
 	/** ゲームで使用するボード */
 	private Board board;
 	
+	/**　再挑戦用 */
+	private Board reBoard;
+	
+	/**　再挑戦用 */
+	private Thinking reMove;
+	
 	/** 先手 */
 	private Thinking brackThinking;
 	
@@ -35,8 +41,9 @@ public class LearningGame extends Mode {
 	 * コンストラクタ
 	 * @param thinkB 先手
 	 * @param thinkW　後手
+	 * @param m 手番
 	 */
-	public LearningGame(Board board, Thinking thinkB, Thinking thinkW, int repeat) {
+	public LearningGame(Board board, Thinking thinkB, Thinking thinkW, Thinking m, int repeat) {
 		
 		this.repeat = repeat;
 		
@@ -45,27 +52,37 @@ public class LearningGame extends Mode {
 
 		//ボードにプレイヤーをsetする
 		this.board = board;
+		reBoard = Board.createCopy(board);
 		
-		move = brackThinking;
+		move = m;
 	}
 	
 	@Override
 	public void draw() {
-		
-		//連戦中は表示しない
-		if(repeat > 0) {
-			return;
-		}
-		
-		board.draw();
+		//board.draw();
 	}
 
 	@Override
 	public Mode update() {
 		
+		if(board.getCount(PIECE.NONE) == 10) {
+			reBoard = Board.createCopy(board);
+			reMove = move;
+		}
+		
 		Thinking next;// 次の思考
 		
 		Cell cell = move.getCell(board);
+		if(cell == null) {
+			//連続再戦(CPUのみ)
+			if(repeat-- > 0) {
+				if(repeat % 10000 == 0) {
+					System.out.println("repeat=" + repeat);
+				}
+				return new LearningGame(new Board(), brackThinking, whiteThinking, brackThinking, repeat);
+			}
+			return new Result(board);
+		}
 		board.setPiece(move.getPiece(), cell);
 		next = move == brackThinking ? whiteThinking : brackThinking;
 
@@ -74,9 +91,10 @@ public class LearningGame extends Mode {
 				setLosing();
 				//連続再戦(CPUのみ)
 				if(repeat-- > 0) {
-					Thinking first = new Computing(PIECE.BLACK);
-					Thinking second = new Computing(PIECE.WHITE);
-					return new LearningGame(new Board(), first, second, repeat);
+					if(repeat % 10000 == 0) {
+						System.out.println("repeat=" + repeat);
+					}
+					return new LearningGame(reBoard, brackThinking, whiteThinking, reMove, repeat);
 				}
 				return new Result(board);
 			}	

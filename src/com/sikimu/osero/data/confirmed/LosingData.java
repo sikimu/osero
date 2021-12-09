@@ -8,5 +8,6 @@ package com.sikimu.osero.data.confirmed;
 public class LosingData {
 	
 	public final static String data[] = {
+			
 	};
 }
